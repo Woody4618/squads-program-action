@@ -10,7 +10,6 @@ import {
   Transaction
 } from '@solana/web3.js'
 import { idlAddress } from '@coral-xyz/anchor/dist/cjs/idl.js'
-import * as yargs from 'yargs'
 import { sendTransaction } from './transaction-helpers.js'
 import { promises as fs } from 'fs'
 
@@ -71,57 +70,6 @@ async function createProgramUpgradeInstruction(
   })
 }
 
-// async function createSetBufferAuthorityInstruction(
-//   bufferAddress: PublicKey,
-//   currentAuthority: PublicKey,
-//   newAuthority: PublicKey
-// ): Promise<TransactionInstruction> {
-//   return new TransactionInstruction({
-//     keys: [
-//       { pubkey: bufferAddress, isWritable: true, isSigner: false },
-//       { pubkey: currentAuthority, isWritable: false, isSigner: true },
-//       { pubkey: newAuthority, isWritable: false, isSigner: false }
-//     ],
-//     programId: BPF_UPGRADE_LOADER_ID,
-//     data: Buffer.from([4, 0, 0, 0]) // SetBufferAuthority instruction
-//   })
-// }
-
-// async function createProgramExtendInstruction(
-//   programId: PublicKey,
-//   additionalBytes: number,
-//   payer?: PublicKey
-// ): Promise<TransactionInstruction> {
-//   const [programDataAddress] = await PublicKey.findProgramAddress(
-//     [programId.toBuffer()],
-//     BPF_UPGRADE_LOADER_ID
-//   )
-
-//   // Create instruction data: [10, additional_bytes]
-//   const data = Buffer.alloc(8)
-//   data.writeUInt32LE(10, 0) // ExtendProgram instruction discriminator (10)
-//   data.writeUInt32LE(additionalBytes, 4) // Number of bytes to extend
-
-//   const keys = [
-//     { pubkey: programDataAddress, isWritable: true, isSigner: false },
-//     { pubkey: programId, isWritable: true, isSigner: false }
-//   ]
-
-//   // Add system program and payer if payer is provided
-//   if (payer) {
-//     keys.push(
-//       { pubkey: SystemProgram.programId, isWritable: false, isSigner: false },
-//       { pubkey: payer, isWritable: true, isSigner: true }
-//     )
-//   }
-
-//   return new TransactionInstruction({
-//     keys,
-//     programId: BPF_UPGRADE_LOADER_ID,
-//     data
-//   })
-// }
-
 async function parseVerificationTransaction(
   base64String: string
 ): Promise<Transaction> {
@@ -132,55 +80,33 @@ async function parseVerificationTransaction(
   return Transaction.from(buffer)
 }
 
-async function main() {
-  const argv = await yargs
-    .option('rpc', {
-      type: 'string',
-      description: 'RPC URL',
-      required: true
-    })
-    .option('program', {
-      type: 'string',
-      description: 'Program ID',
-      required: true
-    })
-    .option('buffer', {
-      type: 'string',
-      description: 'Program buffer address',
-      required: true
-    })
-    .option('idl-buffer', {
-      type: 'string',
-      description: 'IDL buffer address',
-      required: true
-    })
-    .option('multisig', {
-      type: 'string',
-      description: 'Multisig address',
-      required: true
-    })
-    .option('keypair', {
-      type: 'string',
-      description: 'Path to keypair file',
-      required: true
-    })
-    .option('pda-tx', {
-      type: 'string',
-      description: 'The base64 encoded verify pda transaction',
-      required: false
-    }).argv
-
-  const connection = new Connection(argv.rpc)
+export async function main({
+  rpc,
+  program,
+  buffer,
+  idlBuffer,
+  multisig: multisigAddress,
+  keypair,
+  pdaTx
+}: {
+  rpc: string
+  program: string
+  buffer: string
+  idlBuffer: string
+  multisig: string
+  keypair: string
+  pdaTx?: string
+}) {
+  const connection = new Connection(rpc)
 
   // Read the keypair file asynchronously
-  const keypairData = await fs.readFile(argv.keypair, 'utf-8')
-  const keypair = Keypair.fromSecretKey(Buffer.from(JSON.parse(keypairData)))
+  const keypairData = await fs.readFile(keypair, 'utf-8')
+  const keypairObj = Keypair.fromSecretKey(Buffer.from(JSON.parse(keypairData)))
 
-  const multisigPda = new PublicKey(argv.multisig)
-  const programId = new PublicKey(argv.program)
-  const programBuffer = new PublicKey(argv.buffer)
-  const idlBuffer = new PublicKey(argv['idl-buffer'])
-  const pdaTx = argv.pdaTx
+  const multisigPda = new PublicKey(multisigAddress)
+  const programId = new PublicKey(program)
+  const programBuffer = new PublicKey(buffer)
+  const idlBufferObj = new PublicKey(idlBuffer)
 
   // Get vault PDA (authority)
   const [vaultPda] = multisig.getVaultPda({
@@ -193,16 +119,8 @@ async function main() {
   console.log('Vault:', vaultPda.toString())
   console.log('Program:', programId.toString())
   console.log('Program Buffer:', programBuffer.toString())
-  console.log('IDL Buffer:', idlBuffer.toString())
+  console.log('IDL Buffer:', idlBufferObj.toString())
   console.log('Extracted PDA transaction:', pdaTx?.toString())
-
-  // Create authority transfer instructions
-  // NOTE: We cant use this because setting authority and upgrading program in the same transaction fails
-  // const programBufferAuthorityIx = await createSetBufferAuthorityInstruction(
-  //   programBuffer,
-  //   keypair.publicKey,
-  //   vaultPda
-  // )
 
   // Get current and new program sizes
   const programAccount = await connection.getAccountInfo(programId)
@@ -212,33 +130,17 @@ async function main() {
     throw new Error('Could not fetch program or buffer account')
   }
 
-  // This is how you could extend program via squads. But its better to do it in the github action flow
-  // const currentSize = programAccount.data.length;
-  // const newSize = bufferAccount.data.length;
-  // const additionalBytes = Math.max(0, newSize - currentSize);
-
-  // // Create extend instruction if needed
-  // let extendIx: TransactionInstruction | undefined;
-  // if (additionalBytes > 0) {
-  //   console.log(`Extending program by ${additionalBytes} bytes`);
-  //   extendIx = await createProgramExtendInstruction(
-  //     programId,
-  //     additionalBytes,
-  //     vaultPda
-  //   );
-  // }
-
   // Create both upgrade instructions
   const programUpgradeIx = await createProgramUpgradeInstruction(
     programId,
     programBuffer,
     vaultPda,
-    keypair.publicKey
+    keypairObj.publicKey
   )
 
   const idlUpgradeIx = await createIdlUpgradeInstruction(
     programId,
-    idlBuffer,
+    idlBufferObj,
     vaultPda
   )
 
@@ -250,8 +152,8 @@ async function main() {
   instructions.push(programUpgradeIx)
 
   // Add verification instruction if provided
-  if (argv.pdaTx) {
-    const verificationTx = await parseVerificationTransaction(argv.pdaTx)
+  if (pdaTx) {
+    const verificationTx = await parseVerificationTransaction(pdaTx)
     if (verificationTx.instructions.length > 0) {
       console.log('Adding verification instruction')
       instructions = [verificationTx.instructions[1], ...instructions]
@@ -281,7 +183,7 @@ async function main() {
     const createVaultTxIx = await multisig.instructions.vaultTransactionCreate({
       multisigPda,
       transactionIndex: newTransactionIndex,
-      creator: keypair.publicKey,
+      creator: keypairObj.publicKey,
       vaultIndex: 0,
       ephemeralSigners: 0,
       transactionMessage: message,
@@ -297,7 +199,7 @@ async function main() {
     const createVaultSignature = await sendTransaction(
       connection,
       tx,
-      [keypair],
+      [keypairObj],
       100000
     )
 
@@ -306,32 +208,6 @@ async function main() {
     // Create proposal instruction
     console.log('\n=== Creating Proposal ===')
     console.log('\nWith transaction index:', newTransactionIndex)
-    // const proposalIx = await multisig.instructions.proposalCreate({
-    //   multisigPda,
-    //   transactionIndex: newTransactionIndex,
-    //   creator: keypair.publicKey,
-    // });
-
-    // Create and prepare proposal transaction
-    // const proposalTx = new Transaction();
-    // proposalTx.add(proposalIx);
-    // // Send proposal transaction
-    // const proposalSignature = await sendTransactionWithRetry(
-    //   connection,
-    //   proposalTx,
-    //   [keypair],
-    //   {
-    //     commitment: "confirmed",
-    //     skipPreflight: true,
-    //     onStatusUpdate: (status: TxStatusUpdate) => {
-    //       if (status.status === "confirmed") {
-    //         console.log("Proposal confirmed:", status.result);
-    //       }
-    //     },
-    //   }
-    // );
-
-    //console.log("Proposal Created - Signature:", proposalSignature);
     console.log('\nPlease approve in Squads UI: https://v4.squads.so/')
   } catch (error) {
     console.error('\n=== Error ===')
@@ -340,6 +216,15 @@ async function main() {
   }
 }
 
-if (require.main === module) {
-  main().catch(console.error)
-}
+// Remove this block if not needed
+// if (require.main === module) {
+//   main({
+//     rpc: process.argv[2],
+//     program: process.argv[3],
+//     buffer: process.argv[4],
+//     idlBuffer: process.argv[5],
+//     multisig: process.argv[6],
+//     keypair: process.argv[7],
+//     pdaTx: process.argv[8]
+//   }).catch(console.error);
+// }

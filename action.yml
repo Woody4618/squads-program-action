@@ -1,23 +1,40 @@
-name: The name of your action here
-description: Provide a description here
-author: Your name or organization here
+name: Squad Upgrade Action
+description:
+  Action to perform a squad upgrade on Solana including IDL and Verify PDA
+author: Solana Foundation
 
 # Add your action's branding here. This will appear on the GitHub Marketplace.
 branding:
   icon: heart
-  color: red
+  color: blue
 
 # Define your inputs here.
 inputs:
-  milliseconds:
-    description: Your input description here
+  rpc:
+    description: The RPC URL
     required: true
-    default: '1000'
+  program:
+    description: The Program ID
+    required: true
+  buffer:
+    description: The Program buffer address
+    required: true
+  idl-buffer:
+    description: The IDL buffer address
+    required: true
+  multisig:
+    description: The Multisig address
+    required: true
+  keypair:
+    description: Path to keypair file
+    required: true
+  pda-tx:
+    description: The base64 encoded verify pda transaction
+    required: false
 
-# Define your outputs here.
 outputs:
   time:
-    description: Your output description here
+    description: Signature of the squads transaction
 
 runs:
   using: node20
