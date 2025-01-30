@@ -11,7 +11,6 @@ import {
 } from '@solana/web3.js'
 import { idlAddress } from '@coral-xyz/anchor/dist/cjs/idl.js'
 import { sendTransaction } from './transaction-helpers.js'
-import { promises as fs } from 'fs'
 
 const BPF_UPGRADE_LOADER_ID = new PublicKey(
   'BPFLoaderUpgradeab1e11111111111111111111111'
@@ -97,11 +96,9 @@ export async function main({
   keypair: string
   pdaTx?: string
 }) {
-  const connection = new Connection(rpc)
+  const keypairObj = Keypair.fromSecretKey(Uint8Array.from(JSON.parse(keypair)))
 
-  // Read the keypair file asynchronously
-  const keypairData = await fs.readFile(keypair, 'utf-8')
-  const keypairObj = Keypair.fromSecretKey(Buffer.from(JSON.parse(keypairData)))
+  const connection = new Connection(rpc)
 
   const multisigPda = new PublicKey(multisigAddress)
   const programId = new PublicKey(program)

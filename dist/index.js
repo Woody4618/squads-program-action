@@ -1,6 +1,6 @@
 import require$$0$1 from 'os';
 import crypto$1 from 'crypto';
-import require$$0$2, { promises } from 'fs';
+import require$$0$2 from 'fs';
 import require$$1$4 from 'path';
 import require$$2$2 from 'http';
 import require$$1$1, { Agent } from 'https';
@@ -153809,10 +153809,8 @@ async function parseVerificationTransaction(base64String) {
     return Transaction.from(buffer);
 }
 async function main({ rpc, program, buffer, idlBuffer, multisig: multisigAddress, keypair, pdaTx }) {
+    const keypairObj = Keypair.fromSecretKey(Uint8Array.from(JSON.parse(keypair)));
     const connection = new Connection(rpc);
-    // Read the keypair file asynchronously
-    const keypairData = await promises.readFile(keypair, 'utf-8');
-    const keypairObj = Keypair.fromSecretKey(Buffer.from(JSON.parse(keypairData)));
     const multisigPda = new PublicKey(multisigAddress);
     const programId = new PublicKey(program);
     const programBuffer = new PublicKey(buffer);
