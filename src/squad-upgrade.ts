@@ -7,12 +7,12 @@ import {
   SYSVAR_CLOCK_PUBKEY,
   SYSVAR_RENT_PUBKEY,
   TransactionInstruction,
-  Transaction,
-  SystemProgram
+  Transaction
 } from '@solana/web3.js'
 import { idlAddress } from '@coral-xyz/anchor/dist/cjs/idl.js'
 import * as yargs from 'yargs'
 import { sendTransaction } from './transaction-helpers.js'
+import { promises as fs } from 'fs'
 
 const BPF_UPGRADE_LOADER_ID = new PublicKey(
   'BPFLoaderUpgradeab1e11111111111111111111111'
@@ -71,56 +71,56 @@ async function createProgramUpgradeInstruction(
   })
 }
 
-async function createSetBufferAuthorityInstruction(
-  bufferAddress: PublicKey,
-  currentAuthority: PublicKey,
-  newAuthority: PublicKey
-): Promise<TransactionInstruction> {
-  return new TransactionInstruction({
-    keys: [
-      { pubkey: bufferAddress, isWritable: true, isSigner: false },
-      { pubkey: currentAuthority, isWritable: false, isSigner: true },
-      { pubkey: newAuthority, isWritable: false, isSigner: false }
-    ],
-    programId: BPF_UPGRADE_LOADER_ID,
-    data: Buffer.from([4, 0, 0, 0]) // SetBufferAuthority instruction
-  })
-}
+// async function createSetBufferAuthorityInstruction(
+//   bufferAddress: PublicKey,
+//   currentAuthority: PublicKey,
+//   newAuthority: PublicKey
+// ): Promise<TransactionInstruction> {
+//   return new TransactionInstruction({
+//     keys: [
+//       { pubkey: bufferAddress, isWritable: true, isSigner: false },
+//       { pubkey: currentAuthority, isWritable: false, isSigner: true },
+//       { pubkey: newAuthority, isWritable: false, isSigner: false }
+//     ],
+//     programId: BPF_UPGRADE_LOADER_ID,
+//     data: Buffer.from([4, 0, 0, 0]) // SetBufferAuthority instruction
+//   })
+// }
 
-async function createProgramExtendInstruction(
-  programId: PublicKey,
-  additionalBytes: number,
-  payer?: PublicKey
-): Promise<TransactionInstruction> {
-  const [programDataAddress] = await PublicKey.findProgramAddress(
-    [programId.toBuffer()],
-    BPF_UPGRADE_LOADER_ID
-  )
+// async function createProgramExtendInstruction(
+//   programId: PublicKey,
+//   additionalBytes: number,
+//   payer?: PublicKey
+// ): Promise<TransactionInstruction> {
+//   const [programDataAddress] = await PublicKey.findProgramAddress(
+//     [programId.toBuffer()],
+//     BPF_UPGRADE_LOADER_ID
+//   )
 
-  // Create instruction data: [10, additional_bytes]
-  const data = Buffer.alloc(8)
-  data.writeUInt32LE(10, 0) // ExtendProgram instruction discriminator (10)
-  data.writeUInt32LE(additionalBytes, 4) // Number of bytes to extend
+//   // Create instruction data: [10, additional_bytes]
+//   const data = Buffer.alloc(8)
+//   data.writeUInt32LE(10, 0) // ExtendProgram instruction discriminator (10)
+//   data.writeUInt32LE(additionalBytes, 4) // Number of bytes to extend
 
-  const keys = [
-    { pubkey: programDataAddress, isWritable: true, isSigner: false },
-    { pubkey: programId, isWritable: true, isSigner: false }
-  ]
+//   const keys = [
+//     { pubkey: programDataAddress, isWritable: true, isSigner: false },
+//     { pubkey: programId, isWritable: true, isSigner: false }
+//   ]
 
-  // Add system program and payer if payer is provided
-  if (payer) {
-    keys.push(
-      { pubkey: SystemProgram.programId, isWritable: false, isSigner: false },
-      { pubkey: payer, isWritable: true, isSigner: true }
-    )
-  }
+//   // Add system program and payer if payer is provided
+//   if (payer) {
+//     keys.push(
+//       { pubkey: SystemProgram.programId, isWritable: false, isSigner: false },
+//       { pubkey: payer, isWritable: true, isSigner: true }
+//     )
+//   }
 
-  return new TransactionInstruction({
-    keys,
-    programId: BPF_UPGRADE_LOADER_ID,
-    data
-  })
-}
+//   return new TransactionInstruction({
+//     keys,
+//     programId: BPF_UPGRADE_LOADER_ID,
+//     data
+//   })
+// }
 
 async function parseVerificationTransaction(
   base64String: string
@@ -171,9 +171,11 @@ async function main() {
     }).argv
 
   const connection = new Connection(argv.rpc)
-  const keypair = Keypair.fromSecretKey(
-    Buffer.from(JSON.parse(require('fs').readFileSync(argv.keypair, 'utf-8')))
-  )
+
+  // Read the keypair file asynchronously
+  const keypairData = await fs.readFile(argv.keypair, 'utf-8')
+  const keypair = Keypair.fromSecretKey(Buffer.from(JSON.parse(keypairData)))
+
   const multisigPda = new PublicKey(argv.multisig)
   const programId = new PublicKey(argv.program)
   const programBuffer = new PublicKey(argv.buffer)
@@ -196,11 +198,11 @@ async function main() {
 
   // Create authority transfer instructions
   // NOTE: We cant use this because setting authority and upgrading program in the same transaction fails
-  const programBufferAuthorityIx = await createSetBufferAuthorityInstruction(
-    programBuffer,
-    keypair.publicKey,
-    vaultPda
-  )
+  // const programBufferAuthorityIx = await createSetBufferAuthorityInstruction(
+  //   programBuffer,
+  //   keypair.publicKey,
+  //   vaultPda
+  // )
 
   // Get current and new program sizes
   const programAccount = await connection.getAccountInfo(programId)
