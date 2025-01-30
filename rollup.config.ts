@@ -24,7 +24,7 @@ const config = {
     }),
     json()
   ],
-  external: ['rpc-websockets', '@solana/codecs', 'tr46']
+  external: []
 }
 
 export default config
