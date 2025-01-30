@@ -21,6 +21,11 @@ const compat = new FlatCompat({
 })
 
 export default [
+  // Temporarily disable TypeScript linting
+  // {
+  //   files: ['**/*.ts'],
+  //   ...typescript,
+  // },
   {
     ignores: ['**/coverage', '**/dist', '**/linter', '**/node_modules']
   },

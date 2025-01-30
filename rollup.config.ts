@@ -3,6 +3,7 @@
 import commonjs from '@rollup/plugin-commonjs'
 import nodeResolve from '@rollup/plugin-node-resolve'
 import typescript from '@rollup/plugin-typescript'
+import json from '@rollup/plugin-json'
 
 const config = {
   input: 'src/index.ts',
@@ -12,7 +13,18 @@ const config = {
     format: 'es',
     sourcemap: true
   },
-  plugins: [typescript(), nodeResolve(), commonjs()]
+  plugins: [
+    typescript(),
+    nodeResolve({
+      preferBuiltins: true,
+      exportConditions: ['node']
+    }),
+    commonjs({
+      ignoreDynamicRequires: true
+    }),
+    json()
+  ],
+  external: ['rpc-websockets', '@solana/codecs', 'tr46']
 }
 
 export default config
