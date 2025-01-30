@@ -79,6 +79,30 @@ async function parseVerificationTransaction(
   return Transaction.from(buffer)
 }
 
+async function getAccountInfoWithRetry(
+  connection: Connection,
+  pubkey: PublicKey,
+  retries = 5,
+  delay = 1000
+) {
+  for (let i = 0; i < retries; i++) {
+    try {
+      const account = await connection.getAccountInfo(pubkey)
+      return account
+    } catch (error) {
+      if (i === retries - 1) {
+        throw new Error(
+          `Failed to get account info for ${pubkey.toString()} after ${retries} attempts: ${error}`
+        )
+      }
+      console.log(
+        `Retry ${i + 1}/${retries} getting account info for ${pubkey.toString()}`
+      )
+      await new Promise((resolve) => setTimeout(resolve, delay))
+    }
+  }
+}
+
 export async function main({
   rpc,
   program,
@@ -120,8 +144,8 @@ export async function main({
   console.log('Extracted PDA transaction:', pdaTx?.toString())
 
   // Get current and new program sizes
-  const programAccount = await connection.getAccountInfo(programId)
-  const bufferAccount = await connection.getAccountInfo(programBuffer)
+  const programAccount = await getAccountInfoWithRetry(connection, programId)
+  const bufferAccount = await getAccountInfoWithRetry(connection, programBuffer)
 
   if (!programAccount || !bufferAccount) {
     throw new Error('Could not fetch program or buffer account')

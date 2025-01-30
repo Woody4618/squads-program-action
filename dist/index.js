@@ -153808,6 +153808,21 @@ async function parseVerificationTransaction(base64String) {
     // Parse into versioned transaction
     return Transaction.from(buffer);
 }
+async function getAccountInfoWithRetry(connection, pubkey, retries = 5, delay = 1000) {
+    for (let i = 0; i < retries; i++) {
+        try {
+            const account = await connection.getAccountInfo(pubkey);
+            return account;
+        }
+        catch (error) {
+            if (i === retries - 1) {
+                throw new Error(`Failed to get account info for ${pubkey.toString()} after ${retries} attempts: ${error}`);
+            }
+            console.log(`Retry ${i + 1}/${retries} getting account info for ${pubkey.toString()}`);
+            await new Promise((resolve) => setTimeout(resolve, delay));
+        }
+    }
+}
 async function main({ rpc, program, buffer, idlBuffer, multisig: multisigAddress, keypair, pdaTx }) {
     const keypairObj = Keypair.fromSecretKey(Uint8Array.from(JSON.parse(keypair)));
     const connection = new Connection(rpc);
@@ -153828,8 +153843,8 @@ async function main({ rpc, program, buffer, idlBuffer, multisig: multisigAddress
     console.log('IDL Buffer:', idlBufferObj.toString());
     console.log('Extracted PDA transaction:', pdaTx?.toString());
     // Get current and new program sizes
-    const programAccount = await connection.getAccountInfo(programId);
-    const bufferAccount = await connection.getAccountInfo(programBuffer);
+    const programAccount = await getAccountInfoWithRetry(connection, programId);
+    const bufferAccount = await getAccountInfoWithRetry(connection, programBuffer);
     if (!programAccount || !bufferAccount) {
         throw new Error('Could not fetch program or buffer account');
     }
