@@ -36839,7 +36839,7 @@ function requireBindings () {
 		  Error.prepareStackTrace = function(e, st) {
 		    for (var i = 0, l = st.length; i < l; i++) {
 		      fileName = st[i].getFileName();
-		      if (fileName !== __filename) {
+		      if (fileName !== import.meta.url) {
 		        if (calling_file) {
 		          if (fileName !== calling_file) {
 		            return;
@@ -119995,7 +119995,7 @@ function requireBufferutil () {
 	hasRequiredBufferutil = 1;
 
 	try {
-	  bufferutil.exports = requireNodeGypBuild()(__dirname);
+	  bufferutil.exports = requireNodeGypBuild()(import.meta.url);
 	} catch (e) {
 	  bufferutil.exports = requireFallback$1();
 	}
@@ -120806,7 +120806,7 @@ function requireUtf8Validate () {
 	hasRequiredUtf8Validate = 1;
 
 	try {
-	  utf8Validate.exports = requireNodeGypBuild()(__dirname);
+	  utf8Validate.exports = requireNodeGypBuild()(import.meta.url);
 	} catch (e) {
 	  utf8Validate.exports = requireFallback();
 	}
