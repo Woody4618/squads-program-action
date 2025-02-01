@@ -153767,6 +153767,95 @@ async function sendTransaction(connection, transaction, signers, priorityFee = 1
 }
 
 const BPF_UPGRADE_LOADER_ID = new PublicKey('BPFLoaderUpgradeab1e11111111111111111111111');
+async function main({ rpc, program, buffer, idlBuffer, multisig: multisigAddress, keypair, vaultIndex, priorityFee, pdaTx }) {
+    const keypairObj = Keypair.fromSecretKey(Uint8Array.from(JSON.parse(keypair)));
+    const connection = new Connection(rpc);
+    const multisigPda = new PublicKey(multisigAddress);
+    const programId = new PublicKey(program);
+    const programBuffer = new PublicKey(buffer);
+    let idlBufferObj;
+    if (idlBuffer != null) {
+        idlBufferObj = new PublicKey(idlBuffer);
+    }
+    // Get vault PDA (authority)
+    const [vaultPda] = getVaultPda({
+        multisigPda,
+        index: vaultIndex
+    });
+    console.log('\n=== Setup Info ===');
+    console.log('Multisig:', multisigPda.toString());
+    console.log('Vault:', vaultPda.toString());
+    console.log('Program:', programId.toString());
+    console.log('Program Buffer:', programBuffer.toString());
+    console.log('IDL Buffer:', idlBufferObj?.toString());
+    console.log('Extracted PDA transaction:', pdaTx?.toString());
+    // Get current and new program sizes
+    const programAccount = await getAccountInfoWithRetry(connection, programId);
+    const bufferAccount = await getAccountInfoWithRetry(connection, programBuffer);
+    if (!programAccount || !bufferAccount) {
+        throw new Error('Could not fetch program or buffer account');
+    }
+    // Create both upgrade instructions
+    const programUpgradeIx = await createProgramUpgradeInstruction(programId, programBuffer, vaultPda, keypairObj.publicKey);
+    // Build transaction message with all instructions
+    let instructions = [];
+    let memo = 'Program upgrade';
+    // Add IDL upgrade instruction if IDL buffer is provided
+    if (idlBufferObj) {
+        const idlUpgradeIx = await createIdlUpgradeInstruction(programId, idlBufferObj, vaultPda);
+        instructions.push(idlUpgradeIx);
+        memo += ' with IDL update';
+    }
+    // Add program upgrade instruction
+    instructions.push(programUpgradeIx);
+    // Add verification instruction if provided
+    if (pdaTx) {
+        const verificationTx = await parseVerificationTransaction(pdaTx);
+        if (verificationTx.instructions.length > 0) {
+            console.log('Adding verification instruction');
+            instructions = [verificationTx.instructions[1], ...instructions];
+            memo += ' and PDA verification';
+        }
+    }
+    const message = new TransactionMessage({
+        payerKey: vaultPda,
+        recentBlockhash: (await connection.getLatestBlockhash()).blockhash,
+        instructions
+    });
+    // Get next transaction index
+    const multisigInfo = await accounts_exports.Multisig.fromAccountAddress(connection, multisigPda);
+    const currentTransactionIndex = Number(multisigInfo.transactionIndex);
+    const newTransactionIndex = BigInt(currentTransactionIndex + 1);
+    try {
+        console.log('\n=== Creating Upgrade Transaction ===');
+        // Create vault transaction instruction
+        const createVaultTxIx = await instructions_exports.vaultTransactionCreate({
+            multisigPda,
+            transactionIndex: newTransactionIndex,
+            creator: keypairObj.publicKey,
+            vaultIndex: vaultIndex,
+            ephemeralSigners: 0,
+            transactionMessage: message,
+            memo
+        });
+        // Create transaction and add compute budget
+        const tx = new Transaction();
+        tx.recentBlockhash = (await connection.getLatestBlockhash()).blockhash;
+        tx.add(createVaultTxIx);
+        // Send transaction
+        const createVaultSignature = await sendTransaction(connection, tx, [keypairObj], priorityFee);
+        console.log('Transaction Created - Signature:', createVaultSignature);
+        // Create proposal instruction
+        console.log('\n=== Creating Proposal ===');
+        console.log('\nWith transaction index:', newTransactionIndex);
+        console.log('\nPlease approve in Squads UI: https://v4.squads.so/');
+    }
+    catch (error) {
+        console.error('\n=== Error ===');
+        console.error('Error details:', error);
+        process.exit(1);
+    }
+}
 async function createIdlUpgradeInstruction(programId, bufferAddress, upgradeAuthority) {
     const idlAddr = await idlExports.idlAddress(programId);
     console.log('\n=== IDL Info ===');
@@ -153823,86 +153912,6 @@ async function getAccountInfoWithRetry(connection, pubkey, retries = 5, delay = 
         }
     }
 }
-async function main({ rpc, program, buffer, idlBuffer, multisig: multisigAddress, keypair, pdaTx }) {
-    const keypairObj = Keypair.fromSecretKey(Uint8Array.from(JSON.parse(keypair)));
-    const connection = new Connection(rpc);
-    const multisigPda = new PublicKey(multisigAddress);
-    const programId = new PublicKey(program);
-    const programBuffer = new PublicKey(buffer);
-    const idlBufferObj = new PublicKey(idlBuffer);
-    // Get vault PDA (authority)
-    const [vaultPda] = getVaultPda({
-        multisigPda,
-        index: 0
-    });
-    console.log('\n=== Setup Info ===');
-    console.log('Multisig:', multisigPda.toString());
-    console.log('Vault:', vaultPda.toString());
-    console.log('Program:', programId.toString());
-    console.log('Program Buffer:', programBuffer.toString());
-    console.log('IDL Buffer:', idlBufferObj.toString());
-    console.log('Extracted PDA transaction:', pdaTx?.toString());
-    // Get current and new program sizes
-    const programAccount = await getAccountInfoWithRetry(connection, programId);
-    const bufferAccount = await getAccountInfoWithRetry(connection, programBuffer);
-    if (!programAccount || !bufferAccount) {
-        throw new Error('Could not fetch program or buffer account');
-    }
-    // Create both upgrade instructions
-    const programUpgradeIx = await createProgramUpgradeInstruction(programId, programBuffer, vaultPda, keypairObj.publicKey);
-    const idlUpgradeIx = await createIdlUpgradeInstruction(programId, idlBufferObj, vaultPda);
-    // Build transaction message with all instructions
-    // NOTE: You first need to upgrade the IDL if you do it after it says the program is not deployed ...
-    let instructions = [idlUpgradeIx];
-    // Add program upgrade instruction
-    instructions.push(programUpgradeIx);
-    // Add verification instruction if provided
-    if (pdaTx) {
-        const verificationTx = await parseVerificationTransaction(pdaTx);
-        if (verificationTx.instructions.length > 0) {
-            console.log('Adding verification instruction');
-            instructions = [verificationTx.instructions[1], ...instructions];
-        }
-    }
-    const message = new TransactionMessage({
-        payerKey: vaultPda,
-        recentBlockhash: (await connection.getLatestBlockhash()).blockhash,
-        instructions
-    });
-    // Get next transaction index
-    const multisigInfo = await accounts_exports.Multisig.fromAccountAddress(connection, multisigPda);
-    const currentTransactionIndex = Number(multisigInfo.transactionIndex);
-    const newTransactionIndex = BigInt(currentTransactionIndex + 1);
-    try {
-        console.log('\n=== Creating Upgrade Transaction ===');
-        // Create vault transaction instruction
-        const createVaultTxIx = await instructions_exports.vaultTransactionCreate({
-            multisigPda,
-            transactionIndex: newTransactionIndex,
-            creator: keypairObj.publicKey,
-            vaultIndex: 0,
-            ephemeralSigners: 0,
-            transactionMessage: message,
-            memo: 'Program and IDL upgrade'
-        });
-        // Create transaction and add compute budget
-        const tx = new Transaction();
-        tx.recentBlockhash = (await connection.getLatestBlockhash()).blockhash;
-        tx.add(createVaultTxIx);
-        // Send transaction
-        const createVaultSignature = await sendTransaction(connection, tx, [keypairObj], 100000);
-        console.log('Transaction Created - Signature:', createVaultSignature);
-        // Create proposal instruction
-        console.log('\n=== Creating Proposal ===');
-        console.log('\nWith transaction index:', newTransactionIndex);
-        console.log('\nPlease approve in Squads UI: https://v4.squads.so/');
-    }
-    catch (error) {
-        console.error('\n=== Error ===');
-        console.error('Error details:', error);
-        process.exit(1);
-    }
-}
 // Remove this block if not needed
 // if (require.main === module) {
 //   main({
@@ -153930,7 +153939,14 @@ async function run() {
         const idlBuffer = coreExports.getInput('idl-buffer');
         const multisig = coreExports.getInput('multisig');
         const keypair = coreExports.getInput('keypair');
+        const priorityFee = parseInt(coreExports.getInput('priority-fee') || '100000', 10);
+        const vaultIndex = parseInt(coreExports.getInput('vault-index') || '0', 10);
         const pdaTx = coreExports.getInput('pda-tx');
+        // Validate numeric inputs
+        if (isNaN(priorityFee))
+            throw new Error('Invalid priority fee');
+        if (isNaN(vaultIndex))
+            throw new Error('Invalid vault index');
         // Call the squad-upgrade main function with the inputs
         await main({
             rpc,
@@ -153939,6 +153955,8 @@ async function run() {
             idlBuffer,
             multisig,
             keypair,
+            vaultIndex,
+            priorityFee,
             pdaTx
         });
     }

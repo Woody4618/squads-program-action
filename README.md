@@ -1,3 +1,141 @@
+# Squads Program Action
+
+A GitHub Action to automate Solana program upgrades through Squads multisig.
+This action creates and submits a multisig transaction that includes program
+upgrade, optional IDL update, and optional PDA verification.
+
+## Features
+
+- Creates a Squads multisig transaction containing:
+  - Program upgrade instruction using a new buffer
+  - IDL upgrade instruction using a new IDL buffer
+  - Optional PDA verification instruction
+- Handles automatic retries for RPC connections
+- Supports custom RPC endpoints
+- Works with any Squads v4 multisig
+
+## Usage
+
+```yaml
+- uses: Woody4618/squads-program-action@main
+  with:
+    # Required: RPC URL for Solana
+    rpc: ${{ secrets.RPC_URL }}
+
+    # Required: Program ID to upgrade
+    program: BhV84MZrRnEvtWLdWMRJGJr1GbusxfVMHAwc3pq92g4z
+
+    # Required: Buffer containing the new program
+    buffer: 7SGJSG8aoZj39NeAkZvbUvsPDMRcUUrhRhPzgzKv7743
+
+    # Optional: Buffer containing the new IDL
+    idl-buffer: E74BKk75nHtSScZJ4YZ5gB2orvhdzLjcFyxyqkNx6MNc
+
+    # Required: Squads multisig address
+    multisig: ${{ secrets.MULTISIG }}
+
+    # Required: Byte array of the keypair. Needs to have at least voter permission in squads. Format: [23,42,53...]
+    keypair: ${{ secrets.KEYPAIR }}
+
+    # Optional: Priority fee in lamports for the transaction (default: 100000)
+    priority-fee: 100000
+
+    # Optional: Index of the Squads vault to use (default: 0)
+    vault-index: 0
+
+    # Optional: Base64 encoded PDA verification transaction. Get this from solana verify cli using solana-verify export-pda-tx
+    pda-tx: ${{ secrets.PDA_TX }}
+```
+
+## Prerequisites
+
+Before using this action, you need:
+
+1. A Squads v4 multisig with:
+   - Program upgrade authority
+   - Required members set up
+2. Program buffer uploaded to Solana
+3. IDL buffer uploaded to Solana
+4. Keypair with permission to create transactions in the multisig
+
+## Example Workflow
+
+```yaml
+name: Upgrade Program
+on:
+  workflow_dispatch:
+    inputs:
+      buffer:
+        description: 'Program buffer address'
+        required: true
+      idl-buffer:
+        description: 'IDL buffer address'
+        required: true
+
+jobs:
+  upgrade:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: Woody4618/squads-program-action@main
+        with:
+          rpc: ${{ secrets.RPC_URL }}
+          program: BhV84MZrRnEvtWLdWMRJGJr1GbusxfVMHAwc3pq92g4z
+          buffer: ${{ inputs.buffer }}
+          idl-buffer: ${{ inputs.idl-buffer }}
+          multisig: ${{ secrets.MULTISIG }}
+          keypair: ${{ secrets.KEYPAIR }}
+          # Optional: Increase priority fee for faster processing
+          priority-fee: 200000
+          # Optional: Use a different vault index
+          vault-index: 0
+```
+
+## What Happens After Running
+
+1. The action creates a transaction in your Squads multisig containing:
+   - Program upgrade instruction
+   - IDL upgrade instruction
+   - PDA verification (if provided)
+2. Visit [Squads UI](https://v4.squads.so/) to:
+   - Review the transaction
+   - Approve with required signatures
+3. Once enough members approve, Squads executes:
+   - Program upgrade
+   - IDL update (if included)
+   - PDA verification (if included)
+
+## Security Notes
+
+- The provided keypair only needs permission to create transactions
+- Actual upgrade authority comes from the Squads vault
+- Keep your keypair and multisig address secure in GitHub Secrets
+- Use a reliable RPC endpoint as the action includes retry logic
+
+## Development
+
+To contribute or modify this action:
+
+1. Clone the repository
+2. Install dependencies:
+
+```bash
+npm install
+```
+
+3. Make your changes
+4. Build the action:
+
+```bash
+npm run bundle
+```
+
+5. Test locally:
+
+```bash
+npm run local-action
+```
+
 # Create a GitHub Action Using TypeScript
 
 [![GitHub Super-Linter](https://github.com/actions/typescript-action/actions/workflows/linter.yml/badge.svg)](https://github.com/super-linter/super-linter)
