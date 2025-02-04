@@ -112,7 +112,7 @@ jobs:
 - Keep your keypair and multisig address secure in GitHub Secrets
 - Use a reliable RPC endpoint as the action includes retry logic
 
-## Development
+## Development Guide
 
 To contribute or modify this action:
 
@@ -317,38 +317,10 @@ For information about versioning your action, see
 [Versioning](https://github.com/actions/toolkit/blob/master/docs/action-versioning.md)
 in the GitHub Actions toolkit.
 
-## Validate the Action
-
-You can now validate the action by referencing it in a workflow file. For
-example, [`ci.yml`](./.github/workflows/ci.yml) demonstrates how to reference an
-action in the same repository.
-
-```yaml
-steps:
-  - name: Checkout
-    id: checkout
-    uses: actions/checkout@v4
-
-  - name: Test Local Action
-    id: test-action
-    uses: ./
-    with:
-      milliseconds: 1000
-
-  - name: Print Output
-    id: output
-    run: echo "${{ steps.test-action.outputs.time }}"
-```
-
-For example workflow runs, check out the
-[Actions tab](https://github.com/actions/typescript-action/actions)! :rocket:
-
-## Usage
+## Local Development
 
 After testing, you can create version tag(s) that developers can use to
-reference different stable versions of your action. For more information, see
-[Versioning](https://github.com/actions/toolkit/blob/master/docs/action-versioning.md)
-in the GitHub Actions toolkit.
+reference different stable versions of your action.
 
 To include the action in a workflow in another repository, you can use the
 `uses` syntax with the `@` symbol to reference a specific branch, tag, or commit
