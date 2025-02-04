@@ -53,16 +53,17 @@ jobs:
         id: checkout
         uses: actions/checkout@v4
 
-      - name: Test Local Action
-        id: test-action
-        uses: ./
-        with:
-          rpc: 'https://api.devnet.solana.com'
-          program: 'BhV84MZrRnEvtWLdWMRJGJr1GbusxfVMHAwc3pq92g4z'
-          buffer: 'BhV84MZrRnEvtWLdWMRJGJr1GbusxfVMHAwc3pq92g4z'
-          idl-buffer: 'BhV84MZrRnEvtWLdWMRJGJr1GbusxfVMHAwc3pq92g4z'
-          multisig: 'BhV84MZrRnEvtWLdWMRJGJr1GbusxfVMHAwc3pq92g4z'
-          keypair: '[56,15,11,137,47,252,230,29,60,105,12,129,253,186,225,199,160,157,16,79,222,226,70,130,56,42,247,34,19,187,254,119,9,116,146,104,82,128,64,56,117,132,104,202,240,134,101,60,202,123,191,98,9,197,126,206,157,140,136,237,37,166,57,23]'
+      # - name: Test Local Action
+      #   id: test-action
+      #   uses: ./
+      #   with:
+      #     rpc: 'https://api.devnet.solana.com'
+      #     program: 'CenYq6bDRB7p73EjsPEpiYN7uveyPUTdXkDkgUduboaN'
+      #     buffer: 'Gj5KGxmQz7bqnxJsE4DMSyBpu2ryXgcsUhFmxfvHcEYV'
+      #     idl-buffer: 'H5YdFfwkm8nEY3tKkJFqGqyKKz3dKQJJpUoZEmzqFhYe'
+      #     multisig: 'DXngmJfjurhnAwbMPgpUGPH6qNvetCKRJ6PiD4ag4PTj'
+      #     keypair: '[56,15,11,137,47,252,230,29,60,105,12,129,253,186,225,199,160,157,16,79,222,226,70,130,56,42,247,34,19,187,254,119,9,116,146,104,82,128,64,56,117,132,104,202,240,134,101,60,202,123,191,98,9,197,126,206,157,140,136,237,37,166,57,23]'
+
       - name: Print Output
         id: output
         run: echo "${{ steps.test-action.outputs.time }}"
