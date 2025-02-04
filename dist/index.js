@@ -4,13 +4,13 @@ import require$$0$2 from 'fs';
 import require$$1$4 from 'path';
 import require$$2$2 from 'http';
 import require$$1$1, { Agent } from 'https';
-import require$$0$6 from 'net';
+import require$$0$7 from 'net';
 import require$$4 from 'tls';
-import require$$0$3 from 'events';
-import require$$0$5 from 'assert';
-import require$$0$4 from 'util';
+import require$$0$4 from 'events';
+import require$$0$6 from 'assert';
+import require$$0$3 from 'util';
 import Stream$1 from 'stream';
-import require$$0$7, { Buffer as Buffer$1 } from 'buffer';
+import require$$0$5, { Buffer as Buffer$1 } from 'buffer';
 import require$$8 from 'querystring';
 import require$$13 from 'stream/web';
 import require$$0$9 from 'node:stream';
@@ -121,7 +121,7 @@ var hasRequiredCommand;
 function requireCommand () {
 	if (hasRequiredCommand) return command;
 	hasRequiredCommand = 1;
-	var __createBinding = (command.__createBinding) || (Object.create ? (function(o, m, k, k2) {
+	var __createBinding = (command && command.__createBinding) || (Object.create ? (function(o, m, k, k2) {
 	    if (k2 === undefined) k2 = k;
 	    var desc = Object.getOwnPropertyDescriptor(m, k);
 	    if (!desc || ("get" in desc ? !m.__esModule : desc.writable || desc.configurable)) {
@@ -132,12 +132,12 @@ function requireCommand () {
 	    if (k2 === undefined) k2 = k;
 	    o[k2] = m[k];
 	}));
-	var __setModuleDefault = (command.__setModuleDefault) || (Object.create ? (function(o, v) {
+	var __setModuleDefault = (command && command.__setModuleDefault) || (Object.create ? (function(o, v) {
 	    Object.defineProperty(o, "default", { enumerable: true, value: v });
 	}) : function(o, v) {
 	    o["default"] = v;
 	});
-	var __importStar = (command.__importStar) || function (mod) {
+	var __importStar = (command && command.__importStar) || function (mod) {
 	    if (mod && mod.__esModule) return mod;
 	    var result = {};
 	    if (mod != null) for (var k in mod) if (k !== "default" && Object.prototype.hasOwnProperty.call(mod, k)) __createBinding(result, mod, k);
@@ -227,7 +227,7 @@ function requireFileCommand () {
 	if (hasRequiredFileCommand) return fileCommand;
 	hasRequiredFileCommand = 1;
 	// For internal use, subject to change.
-	var __createBinding = (fileCommand.__createBinding) || (Object.create ? (function(o, m, k, k2) {
+	var __createBinding = (fileCommand && fileCommand.__createBinding) || (Object.create ? (function(o, m, k, k2) {
 	    if (k2 === undefined) k2 = k;
 	    var desc = Object.getOwnPropertyDescriptor(m, k);
 	    if (!desc || ("get" in desc ? !m.__esModule : desc.writable || desc.configurable)) {
@@ -238,12 +238,12 @@ function requireFileCommand () {
 	    if (k2 === undefined) k2 = k;
 	    o[k2] = m[k];
 	}));
-	var __setModuleDefault = (fileCommand.__setModuleDefault) || (Object.create ? (function(o, v) {
+	var __setModuleDefault = (fileCommand && fileCommand.__setModuleDefault) || (Object.create ? (function(o, v) {
 	    Object.defineProperty(o, "default", { enumerable: true, value: v });
 	}) : function(o, v) {
 	    o["default"] = v;
 	});
-	var __importStar = (fileCommand.__importStar) || function (mod) {
+	var __importStar = (fileCommand && fileCommand.__importStar) || function (mod) {
 	    if (mod && mod.__esModule) return mod;
 	    var result = {};
 	    if (mod != null) for (var k in mod) if (k !== "default" && Object.prototype.hasOwnProperty.call(mod, k)) __createBinding(result, mod, k);
@@ -408,8 +408,8 @@ function requireTunnel$1 () {
 	var tls = require$$4;
 	var http = require$$2$2;
 	var https = require$$1$1;
-	var events = require$$0$3;
-	var util = require$$0$4;
+	var events = require$$0$4;
+	var util = require$$0$3;
 
 
 	tunnel$1.httpOverHttp = httpOverHttp;
@@ -1123,14 +1123,14 @@ function requireUtil$7 () {
 	if (hasRequiredUtil$7) return util$7;
 	hasRequiredUtil$7 = 1;
 
-	const assert = require$$0$5;
+	const assert = require$$0$6;
 	const { kDestroyed, kBodyUsed } = requireSymbols$4();
 	const { IncomingMessage } = require$$2$2;
 	const stream = Stream$1;
-	const net = require$$0$6;
+	const net = require$$0$7;
 	const { InvalidArgumentError } = requireErrors();
-	const { Blob } = require$$0$7;
-	const nodeUtil = require$$0$4;
+	const { Blob } = require$$0$5;
+	const nodeUtil = require$$0$3;
 	const { stringify } = require$$8;
 	const { headerNameLowerCasedRecord } = requireConstants$6();
 
@@ -3596,7 +3596,7 @@ function requireUtil$6 () {
 	const { getGlobalOrigin } = requireGlobal$1();
 	const { performance } = require$$2$3;
 	const { isBlobLike, toUSVString, ReadableStreamFrom } = requireUtil$7();
-	const assert = require$$0$5;
+	const assert = require$$0$6;
 	const { isUint8Array } = require$$5;
 
 	let supportedHashes = [];
@@ -4761,7 +4761,7 @@ function requireWebidl () {
 	if (hasRequiredWebidl) return webidl_1;
 	hasRequiredWebidl = 1;
 
-	const { types } = require$$0$4;
+	const { types } = require$$0$3;
 	const { hasOwn, toUSVString } = requireUtil$6();
 
 	/** @type {import('../../types/webidl').Webidl} */
@@ -5414,8 +5414,8 @@ var hasRequiredDataURL;
 function requireDataURL () {
 	if (hasRequiredDataURL) return dataURL;
 	hasRequiredDataURL = 1;
-	const assert = require$$0$5;
-	const { atob } = require$$0$7;
+	const assert = require$$0$6;
+	const { atob } = require$$0$5;
 	const { isomorphicDecode } = requireUtil$6();
 
 	const encoder = new TextEncoder();
@@ -6051,8 +6051,8 @@ function requireFile () {
 	if (hasRequiredFile) return file;
 	hasRequiredFile = 1;
 
-	const { Blob, File: NativeFile } = require$$0$7;
-	const { types } = require$$0$4;
+	const { Blob, File: NativeFile } = require$$0$5;
+	const { types } = require$$0$3;
 	const { kState } = requireSymbols$3();
 	const { isBlobLike } = requireUtil$6();
 	const { webidl } = requireWebidl();
@@ -6407,7 +6407,7 @@ function requireFormdata () {
 	const { kState } = requireSymbols$3();
 	const { File: UndiciFile, FileLike, isFileLike } = requireFile();
 	const { webidl } = requireWebidl();
-	const { Blob, File: NativeFile } = require$$0$7;
+	const { Blob, File: NativeFile } = require$$0$5;
 
 	/** @type {globalThis['File']} */
 	const File = NativeFile ?? UndiciFile;
@@ -6690,9 +6690,9 @@ function requireBody () {
 	const { kState } = requireSymbols$3();
 	const { webidl } = requireWebidl();
 	const { DOMException, structuredClone } = requireConstants$5();
-	const { Blob, File: NativeFile } = require$$0$7;
+	const { Blob, File: NativeFile } = require$$0$5;
 	const { kBodyUsed } = requireSymbols$4();
-	const assert = require$$0$5;
+	const assert = require$$0$6;
 	const { isErrored } = requireUtil$7();
 	const { isUint8Array, isArrayBuffer } = require$$5;
 	const { File: UndiciFile } = requireFile();
@@ -7293,7 +7293,7 @@ function requireRequest$1 () {
 	  InvalidArgumentError,
 	  NotSupportedError
 	} = requireErrors();
-	const assert = require$$0$5;
+	const assert = require$$0$6;
 	const { kHTTP2BuildRequest, kHTTP2CopyHeaders, kHTTP1BuildRequest } = requireSymbols$4();
 	const util = requireUtil$7();
 
@@ -7796,7 +7796,7 @@ function requireDispatcher () {
 	if (hasRequiredDispatcher) return dispatcher;
 	hasRequiredDispatcher = 1;
 
-	const EventEmitter = require$$0$3;
+	const EventEmitter = require$$0$4;
 
 	class Dispatcher extends EventEmitter {
 	  dispatch () {
@@ -8023,8 +8023,8 @@ function requireConnect () {
 	if (hasRequiredConnect) return connect;
 	hasRequiredConnect = 1;
 
-	const net = require$$0$6;
-	const assert = require$$0$5;
+	const net = require$$0$7;
+	const assert = require$$0$6;
 	const util = requireUtil$7();
 	const { InvalidArgumentError, ConnectTimeoutError } = requireErrors();
 
@@ -8529,9 +8529,9 @@ function requireRedirectHandler () {
 
 	const util = requireUtil$7();
 	const { kBodyUsed } = requireSymbols$4();
-	const assert = require$$0$5;
+	const assert = require$$0$6;
 	const { InvalidArgumentError } = requireErrors();
-	const EE = require$$0$3;
+	const EE = require$$0$4;
 
 	const redirectableStatusCodes = [300, 301, 302, 303, 307, 308];
 
@@ -8789,8 +8789,8 @@ function requireClient () {
 
 	/* global WebAssembly */
 
-	const assert = require$$0$5;
-	const net = require$$0$6;
+	const assert = require$$0$6;
+	const net = require$$0$7;
 	const http = require$$2$2;
 	const { pipeline } = Stream$1;
 	const util = requireUtil$7();
@@ -11960,7 +11960,7 @@ function requireReadable () {
 	if (hasRequiredReadable) return readable;
 	hasRequiredReadable = 1;
 
-	const assert = require$$0$5;
+	const assert = require$$0$6;
 	const { Readable } = Stream$1;
 	const { RequestAbortedError, NotSupportedError, InvalidArgumentError } = requireErrors();
 	const util = requireUtil$7();
@@ -12287,7 +12287,7 @@ var hasRequiredUtil$5;
 function requireUtil$5 () {
 	if (hasRequiredUtil$5) return util$5;
 	hasRequiredUtil$5 = 1;
-	const assert = require$$0$5;
+	const assert = require$$0$6;
 	const {
 	  ResponseStatusCodeError
 	} = requireErrors();
@@ -12834,7 +12834,7 @@ function requireApiPipeline () {
 	const util = requireUtil$7();
 	const { AsyncResource } = require$$4$1;
 	const { addSignal, removeSignal } = requireAbortSignal();
-	const assert = require$$0$5;
+	const assert = require$$0$6;
 
 	const kResume = Symbol('resume');
 
@@ -13082,7 +13082,7 @@ function requireApiUpgrade () {
 	const { AsyncResource } = require$$4$1;
 	const util = requireUtil$7();
 	const { addSignal, removeSignal } = requireAbortSignal();
-	const assert = require$$0$5;
+	const assert = require$$0$6;
 
 	class UpgradeHandler extends AsyncResource {
 	  constructor (opts, callback) {
@@ -13387,7 +13387,7 @@ function requireMockUtils () {
 	  types: {
 	    isPromise
 	  }
-	} = require$$0$4;
+	} = require$$0$3;
 
 	function matchValue (match, value) {
 	  if (typeof match === 'string') {
@@ -13947,7 +13947,7 @@ function requireMockClient () {
 	if (hasRequiredMockClient) return mockClient;
 	hasRequiredMockClient = 1;
 
-	const { promisify } = require$$0$4;
+	const { promisify } = require$$0$3;
 	const Client = requireClient();
 	const { buildMockDispatch } = requireMockUtils();
 	const {
@@ -14014,7 +14014,7 @@ function requireMockPool () {
 	if (hasRequiredMockPool) return mockPool;
 	hasRequiredMockPool = 1;
 
-	const { promisify } = require$$0$4;
+	const { promisify } = require$$0$3;
 	const Pool = requirePool();
 	const { buildMockDispatch } = requireMockUtils();
 	const {
@@ -14541,7 +14541,7 @@ var hasRequiredRetryHandler;
 function requireRetryHandler () {
 	if (hasRequiredRetryHandler) return RetryHandler_1;
 	hasRequiredRetryHandler = 1;
-	const assert = require$$0$5;
+	const assert = require$$0$6;
 
 	const { kRetryHandlerDefaultRetry } = requireSymbols$4();
 	const { RequestRetryError } = requireErrors();
@@ -14979,7 +14979,7 @@ function requireHeaders () {
 	  isValidHeaderValue
 	} = requireUtil$6();
 	const { webidl } = requireWebidl();
-	const assert = require$$0$5;
+	const assert = require$$0$6;
 
 	const kHeadersMap = Symbol('headers map');
 	const kHeadersSortedMap = Symbol('headers map sorted');
@@ -15582,8 +15582,8 @@ function requireResponse () {
 	const { getGlobalOrigin } = requireGlobal$1();
 	const { URLSerializer } = requireDataURL();
 	const { kHeadersList, kConstruct } = requireSymbols$4();
-	const assert = require$$0$5;
-	const { types } = require$$0$4;
+	const assert = require$$0$6;
+	const { types } = require$$0$3;
 
 	const ReadableStream = globalThis.ReadableStream || require$$13.ReadableStream;
 	const textEncoder = new TextEncoder('utf-8');
@@ -16166,8 +16166,8 @@ function requireRequest () {
 	const { getGlobalOrigin } = requireGlobal$1();
 	const { URLSerializer } = requireDataURL();
 	const { kHeadersList, kConstruct } = requireSymbols$4();
-	const assert = require$$0$5;
-	const { getMaxListeners, setMaxListeners, getEventListeners, defaultMaxListeners } = require$$0$3;
+	const assert = require$$0$6;
+	const { getMaxListeners, setMaxListeners, getEventListeners, defaultMaxListeners } = require$$0$4;
 
 	let TransformStream = globalThis.TransformStream;
 
@@ -17132,7 +17132,7 @@ function requireFetch () {
 	  urlHasHttpsScheme
 	} = requireUtil$6();
 	const { kState, kHeaders, kGuard, kRealm } = requireSymbols$3();
-	const assert = require$$0$5;
+	const assert = require$$0$6;
 	const { safelyExtractBody } = requireBody();
 	const {
 	  redirectStatusSet,
@@ -17143,7 +17143,7 @@ function requireFetch () {
 	  DOMException
 	} = requireConstants$5();
 	const { kHeadersList } = requireSymbols$4();
-	const EE = require$$0$3;
+	const EE = require$$0$4;
 	const { Readable, pipeline } = Stream$1;
 	const { addAbortListener, isErrored, isReadable, nodeMajor, nodeMinor } = requireUtil$7();
 	const { dataURLProcessor, serializeAMimeType } = requireDataURL();
@@ -17877,7 +17877,7 @@ function requireFetch () {
 	    }
 	    case 'blob:': {
 	      if (!resolveObjectURL) {
-	        resolveObjectURL = require$$0$7.resolveObjectURL;
+	        resolveObjectURL = require$$0$5.resolveObjectURL;
 	      }
 
 	      // 1. Let blobURLEntry be request’s current URL’s blob URL entry.
@@ -19584,9 +19584,9 @@ function requireUtil$4 () {
 	const { getEncoding } = requireEncoding();
 	const { DOMException } = requireConstants$5();
 	const { serializeAMimeType, parseMIMEType } = requireDataURL();
-	const { types } = require$$0$4;
+	const { types } = require$$0$3;
 	const { StringDecoder } = require$$6;
-	const { btoa } = require$$0$7;
+	const { btoa } = require$$0$5;
 
 	/** @type {PropertyDescriptor} */
 	const staticPropertyDescriptors = {
@@ -20338,7 +20338,7 @@ function requireUtil$3 () {
 	if (hasRequiredUtil$3) return util$3;
 	hasRequiredUtil$3 = 1;
 
-	const assert = require$$0$5;
+	const assert = require$$0$6;
 	const { URLSerializer } = requireDataURL();
 	const { isValidHeaderName } = requireUtil$6();
 
@@ -20405,7 +20405,7 @@ function requireCache () {
 	const { kState, kHeaders, kGuard, kRealm } = requireSymbols$3();
 	const { fetching } = requireFetch();
 	const { urlIsHttpHttpsScheme, createDeferredPromise, readAllBytes } = requireUtil$6();
-	const assert = require$$0$5;
+	const assert = require$$0$6;
 	const { getGlobalDispatcher } = requireGlobal();
 
 	/**
@@ -21413,7 +21413,7 @@ function requireUtil$2 () {
 	if (hasRequiredUtil$2) return util$2;
 	hasRequiredUtil$2 = 1;
 
-	const assert = require$$0$5;
+	const assert = require$$0$6;
 	const { kHeadersList } = requireSymbols$4();
 
 	function isCTLExcludingHtab (value) {
@@ -21715,7 +21715,7 @@ function requireParse () {
 	const { maxNameValuePairSize, maxAttributeValueSize } = requireConstants$3();
 	const { isCTLExcludingHtab } = requireUtil$2();
 	const { collectASequenceOfCodePointsFast } = requireDataURL();
-	const assert = require$$0$5;
+	const assert = require$$0$6;
 
 	/**
 	 * @description Parses the field-value attributes of a set-cookie header string.
@@ -23579,7 +23579,7 @@ function requireWebsocket$1 () {
 	const { ByteParser } = requireReceiver$1();
 	const { kEnumerableProperty, isBlobLike } = requireUtil$7();
 	const { getGlobalDispatcher } = requireGlobal();
-	const { types } = require$$0$4;
+	const { types } = require$$0$3;
 
 	let experimentalWarned = false;
 
@@ -24378,7 +24378,7 @@ function requireLib$2 () {
 	if (hasRequiredLib$2) return lib$2;
 	hasRequiredLib$2 = 1;
 	/* eslint-disable @typescript-eslint/no-explicit-any */
-	var __createBinding = (lib$2.__createBinding) || (Object.create ? (function(o, m, k, k2) {
+	var __createBinding = (lib$2 && lib$2.__createBinding) || (Object.create ? (function(o, m, k, k2) {
 	    if (k2 === undefined) k2 = k;
 	    var desc = Object.getOwnPropertyDescriptor(m, k);
 	    if (!desc || ("get" in desc ? !m.__esModule : desc.writable || desc.configurable)) {
@@ -24389,19 +24389,19 @@ function requireLib$2 () {
 	    if (k2 === undefined) k2 = k;
 	    o[k2] = m[k];
 	}));
-	var __setModuleDefault = (lib$2.__setModuleDefault) || (Object.create ? (function(o, v) {
+	var __setModuleDefault = (lib$2 && lib$2.__setModuleDefault) || (Object.create ? (function(o, v) {
 	    Object.defineProperty(o, "default", { enumerable: true, value: v });
 	}) : function(o, v) {
 	    o["default"] = v;
 	});
-	var __importStar = (lib$2.__importStar) || function (mod) {
+	var __importStar = (lib$2 && lib$2.__importStar) || function (mod) {
 	    if (mod && mod.__esModule) return mod;
 	    var result = {};
 	    if (mod != null) for (var k in mod) if (k !== "default" && Object.prototype.hasOwnProperty.call(mod, k)) __createBinding(result, mod, k);
 	    __setModuleDefault(result, mod);
 	    return result;
 	};
-	var __awaiter = (lib$2.__awaiter) || function (thisArg, _arguments, P, generator) {
+	var __awaiter = (lib$2 && lib$2.__awaiter) || function (thisArg, _arguments, P, generator) {
 	    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
 	    return new (P || (P = Promise))(function (resolve, reject) {
 	        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
@@ -25038,7 +25038,7 @@ var hasRequiredAuth;
 function requireAuth () {
 	if (hasRequiredAuth) return auth;
 	hasRequiredAuth = 1;
-	var __awaiter = (auth.__awaiter) || function (thisArg, _arguments, P, generator) {
+	var __awaiter = (auth && auth.__awaiter) || function (thisArg, _arguments, P, generator) {
 	    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
 	    return new (P || (P = Promise))(function (resolve, reject) {
 	        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
@@ -25126,7 +25126,7 @@ var hasRequiredOidcUtils;
 function requireOidcUtils () {
 	if (hasRequiredOidcUtils) return oidcUtils;
 	hasRequiredOidcUtils = 1;
-	var __awaiter = (oidcUtils.__awaiter) || function (thisArg, _arguments, P, generator) {
+	var __awaiter = (oidcUtils && oidcUtils.__awaiter) || function (thisArg, _arguments, P, generator) {
 	    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
 	    return new (P || (P = Promise))(function (resolve, reject) {
 	        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
@@ -25213,7 +25213,7 @@ function requireSummary () {
 	if (hasRequiredSummary) return summary;
 	hasRequiredSummary = 1;
 	(function (exports) {
-		var __awaiter = (summary.__awaiter) || function (thisArg, _arguments, P, generator) {
+		var __awaiter = (summary && summary.__awaiter) || function (thisArg, _arguments, P, generator) {
 		    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
 		    return new (P || (P = Promise))(function (resolve, reject) {
 		        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
@@ -25506,7 +25506,7 @@ var hasRequiredPathUtils;
 function requirePathUtils () {
 	if (hasRequiredPathUtils) return pathUtils;
 	hasRequiredPathUtils = 1;
-	var __createBinding = (pathUtils.__createBinding) || (Object.create ? (function(o, m, k, k2) {
+	var __createBinding = (pathUtils && pathUtils.__createBinding) || (Object.create ? (function(o, m, k, k2) {
 	    if (k2 === undefined) k2 = k;
 	    var desc = Object.getOwnPropertyDescriptor(m, k);
 	    if (!desc || ("get" in desc ? !m.__esModule : desc.writable || desc.configurable)) {
@@ -25517,12 +25517,12 @@ function requirePathUtils () {
 	    if (k2 === undefined) k2 = k;
 	    o[k2] = m[k];
 	}));
-	var __setModuleDefault = (pathUtils.__setModuleDefault) || (Object.create ? (function(o, v) {
+	var __setModuleDefault = (pathUtils && pathUtils.__setModuleDefault) || (Object.create ? (function(o, v) {
 	    Object.defineProperty(o, "default", { enumerable: true, value: v });
 	}) : function(o, v) {
 	    o["default"] = v;
 	});
-	var __importStar = (pathUtils.__importStar) || function (mod) {
+	var __importStar = (pathUtils && pathUtils.__importStar) || function (mod) {
 	    if (mod && mod.__esModule) return mod;
 	    var result = {};
 	    if (mod != null) for (var k in mod) if (k !== "default" && Object.prototype.hasOwnProperty.call(mod, k)) __createBinding(result, mod, k);
@@ -25586,26 +25586,26 @@ function requireIoUtil () {
 	if (hasRequiredIoUtil) return ioUtil;
 	hasRequiredIoUtil = 1;
 	(function (exports) {
-		var __createBinding = (ioUtil.__createBinding) || (Object.create ? (function(o, m, k, k2) {
+		var __createBinding = (ioUtil && ioUtil.__createBinding) || (Object.create ? (function(o, m, k, k2) {
 		    if (k2 === undefined) k2 = k;
 		    Object.defineProperty(o, k2, { enumerable: true, get: function() { return m[k]; } });
 		}) : (function(o, m, k, k2) {
 		    if (k2 === undefined) k2 = k;
 		    o[k2] = m[k];
 		}));
-		var __setModuleDefault = (ioUtil.__setModuleDefault) || (Object.create ? (function(o, v) {
+		var __setModuleDefault = (ioUtil && ioUtil.__setModuleDefault) || (Object.create ? (function(o, v) {
 		    Object.defineProperty(o, "default", { enumerable: true, value: v });
 		}) : function(o, v) {
 		    o["default"] = v;
 		});
-		var __importStar = (ioUtil.__importStar) || function (mod) {
+		var __importStar = (ioUtil && ioUtil.__importStar) || function (mod) {
 		    if (mod && mod.__esModule) return mod;
 		    var result = {};
 		    if (mod != null) for (var k in mod) if (k !== "default" && Object.hasOwnProperty.call(mod, k)) __createBinding(result, mod, k);
 		    __setModuleDefault(result, mod);
 		    return result;
 		};
-		var __awaiter = (ioUtil.__awaiter) || function (thisArg, _arguments, P, generator) {
+		var __awaiter = (ioUtil && ioUtil.__awaiter) || function (thisArg, _arguments, P, generator) {
 		    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
 		    return new (P || (P = Promise))(function (resolve, reject) {
 		        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
@@ -25777,26 +25777,26 @@ var hasRequiredIo;
 function requireIo () {
 	if (hasRequiredIo) return io;
 	hasRequiredIo = 1;
-	var __createBinding = (io.__createBinding) || (Object.create ? (function(o, m, k, k2) {
+	var __createBinding = (io && io.__createBinding) || (Object.create ? (function(o, m, k, k2) {
 	    if (k2 === undefined) k2 = k;
 	    Object.defineProperty(o, k2, { enumerable: true, get: function() { return m[k]; } });
 	}) : (function(o, m, k, k2) {
 	    if (k2 === undefined) k2 = k;
 	    o[k2] = m[k];
 	}));
-	var __setModuleDefault = (io.__setModuleDefault) || (Object.create ? (function(o, v) {
+	var __setModuleDefault = (io && io.__setModuleDefault) || (Object.create ? (function(o, v) {
 	    Object.defineProperty(o, "default", { enumerable: true, value: v });
 	}) : function(o, v) {
 	    o["default"] = v;
 	});
-	var __importStar = (io.__importStar) || function (mod) {
+	var __importStar = (io && io.__importStar) || function (mod) {
 	    if (mod && mod.__esModule) return mod;
 	    var result = {};
 	    if (mod != null) for (var k in mod) if (k !== "default" && Object.hasOwnProperty.call(mod, k)) __createBinding(result, mod, k);
 	    __setModuleDefault(result, mod);
 	    return result;
 	};
-	var __awaiter = (io.__awaiter) || function (thisArg, _arguments, P, generator) {
+	var __awaiter = (io && io.__awaiter) || function (thisArg, _arguments, P, generator) {
 	    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
 	    return new (P || (P = Promise))(function (resolve, reject) {
 	        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
@@ -25807,7 +25807,7 @@ function requireIo () {
 	};
 	Object.defineProperty(io, "__esModule", { value: true });
 	io.findInPath = io.which = io.mkdirP = io.rmRF = io.mv = io.cp = undefined;
-	const assert_1 = require$$0$5;
+	const assert_1 = require$$0$6;
 	const path = __importStar(require$$1$4);
 	const ioUtil = __importStar(requireIoUtil());
 	/**
@@ -26083,26 +26083,26 @@ var hasRequiredToolrunner;
 function requireToolrunner () {
 	if (hasRequiredToolrunner) return toolrunner;
 	hasRequiredToolrunner = 1;
-	var __createBinding = (toolrunner.__createBinding) || (Object.create ? (function(o, m, k, k2) {
+	var __createBinding = (toolrunner && toolrunner.__createBinding) || (Object.create ? (function(o, m, k, k2) {
 	    if (k2 === undefined) k2 = k;
 	    Object.defineProperty(o, k2, { enumerable: true, get: function() { return m[k]; } });
 	}) : (function(o, m, k, k2) {
 	    if (k2 === undefined) k2 = k;
 	    o[k2] = m[k];
 	}));
-	var __setModuleDefault = (toolrunner.__setModuleDefault) || (Object.create ? (function(o, v) {
+	var __setModuleDefault = (toolrunner && toolrunner.__setModuleDefault) || (Object.create ? (function(o, v) {
 	    Object.defineProperty(o, "default", { enumerable: true, value: v });
 	}) : function(o, v) {
 	    o["default"] = v;
 	});
-	var __importStar = (toolrunner.__importStar) || function (mod) {
+	var __importStar = (toolrunner && toolrunner.__importStar) || function (mod) {
 	    if (mod && mod.__esModule) return mod;
 	    var result = {};
 	    if (mod != null) for (var k in mod) if (k !== "default" && Object.hasOwnProperty.call(mod, k)) __createBinding(result, mod, k);
 	    __setModuleDefault(result, mod);
 	    return result;
 	};
-	var __awaiter = (toolrunner.__awaiter) || function (thisArg, _arguments, P, generator) {
+	var __awaiter = (toolrunner && toolrunner.__awaiter) || function (thisArg, _arguments, P, generator) {
 	    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
 	    return new (P || (P = Promise))(function (resolve, reject) {
 	        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
@@ -26114,7 +26114,7 @@ function requireToolrunner () {
 	Object.defineProperty(toolrunner, "__esModule", { value: true });
 	toolrunner.argStringToArray = toolrunner.ToolRunner = undefined;
 	const os = __importStar(require$$0$1);
-	const events = __importStar(require$$0$3);
+	const events = __importStar(require$$0$4);
 	const child = __importStar(require$$2$4);
 	const path = __importStar(require$$1$4);
 	const io = __importStar(requireIo());
@@ -26708,26 +26708,26 @@ var hasRequiredExec;
 function requireExec () {
 	if (hasRequiredExec) return exec;
 	hasRequiredExec = 1;
-	var __createBinding = (exec.__createBinding) || (Object.create ? (function(o, m, k, k2) {
+	var __createBinding = (exec && exec.__createBinding) || (Object.create ? (function(o, m, k, k2) {
 	    if (k2 === undefined) k2 = k;
 	    Object.defineProperty(o, k2, { enumerable: true, get: function() { return m[k]; } });
 	}) : (function(o, m, k, k2) {
 	    if (k2 === undefined) k2 = k;
 	    o[k2] = m[k];
 	}));
-	var __setModuleDefault = (exec.__setModuleDefault) || (Object.create ? (function(o, v) {
+	var __setModuleDefault = (exec && exec.__setModuleDefault) || (Object.create ? (function(o, v) {
 	    Object.defineProperty(o, "default", { enumerable: true, value: v });
 	}) : function(o, v) {
 	    o["default"] = v;
 	});
-	var __importStar = (exec.__importStar) || function (mod) {
+	var __importStar = (exec && exec.__importStar) || function (mod) {
 	    if (mod && mod.__esModule) return mod;
 	    var result = {};
 	    if (mod != null) for (var k in mod) if (k !== "default" && Object.hasOwnProperty.call(mod, k)) __createBinding(result, mod, k);
 	    __setModuleDefault(result, mod);
 	    return result;
 	};
-	var __awaiter = (exec.__awaiter) || function (thisArg, _arguments, P, generator) {
+	var __awaiter = (exec && exec.__awaiter) || function (thisArg, _arguments, P, generator) {
 	    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
 	    return new (P || (P = Promise))(function (resolve, reject) {
 	        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
@@ -26819,7 +26819,7 @@ function requirePlatform () {
 	if (hasRequiredPlatform) return platform;
 	hasRequiredPlatform = 1;
 	(function (exports) {
-		var __createBinding = (platform.__createBinding) || (Object.create ? (function(o, m, k, k2) {
+		var __createBinding = (platform && platform.__createBinding) || (Object.create ? (function(o, m, k, k2) {
 		    if (k2 === undefined) k2 = k;
 		    var desc = Object.getOwnPropertyDescriptor(m, k);
 		    if (!desc || ("get" in desc ? !m.__esModule : desc.writable || desc.configurable)) {
@@ -26830,19 +26830,19 @@ function requirePlatform () {
 		    if (k2 === undefined) k2 = k;
 		    o[k2] = m[k];
 		}));
-		var __setModuleDefault = (platform.__setModuleDefault) || (Object.create ? (function(o, v) {
+		var __setModuleDefault = (platform && platform.__setModuleDefault) || (Object.create ? (function(o, v) {
 		    Object.defineProperty(o, "default", { enumerable: true, value: v });
 		}) : function(o, v) {
 		    o["default"] = v;
 		});
-		var __importStar = (platform.__importStar) || function (mod) {
+		var __importStar = (platform && platform.__importStar) || function (mod) {
 		    if (mod && mod.__esModule) return mod;
 		    var result = {};
 		    if (mod != null) for (var k in mod) if (k !== "default" && Object.prototype.hasOwnProperty.call(mod, k)) __createBinding(result, mod, k);
 		    __setModuleDefault(result, mod);
 		    return result;
 		};
-		var __awaiter = (platform.__awaiter) || function (thisArg, _arguments, P, generator) {
+		var __awaiter = (platform && platform.__awaiter) || function (thisArg, _arguments, P, generator) {
 		    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
 		    return new (P || (P = Promise))(function (resolve, reject) {
 		        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
@@ -26851,7 +26851,7 @@ function requirePlatform () {
 		        step((generator = generator.apply(thisArg, _arguments || [])).next());
 		    });
 		};
-		var __importDefault = (platform.__importDefault) || function (mod) {
+		var __importDefault = (platform && platform.__importDefault) || function (mod) {
 		    return (mod && mod.__esModule) ? mod : { "default": mod };
 		};
 		Object.defineProperty(exports, "__esModule", { value: true });
@@ -26922,7 +26922,7 @@ function requireCore () {
 	if (hasRequiredCore) return core;
 	hasRequiredCore = 1;
 	(function (exports) {
-		var __createBinding = (core.__createBinding) || (Object.create ? (function(o, m, k, k2) {
+		var __createBinding = (core && core.__createBinding) || (Object.create ? (function(o, m, k, k2) {
 		    if (k2 === undefined) k2 = k;
 		    var desc = Object.getOwnPropertyDescriptor(m, k);
 		    if (!desc || ("get" in desc ? !m.__esModule : desc.writable || desc.configurable)) {
@@ -26933,19 +26933,19 @@ function requireCore () {
 		    if (k2 === undefined) k2 = k;
 		    o[k2] = m[k];
 		}));
-		var __setModuleDefault = (core.__setModuleDefault) || (Object.create ? (function(o, v) {
+		var __setModuleDefault = (core && core.__setModuleDefault) || (Object.create ? (function(o, v) {
 		    Object.defineProperty(o, "default", { enumerable: true, value: v });
 		}) : function(o, v) {
 		    o["default"] = v;
 		});
-		var __importStar = (core.__importStar) || function (mod) {
+		var __importStar = (core && core.__importStar) || function (mod) {
 		    if (mod && mod.__esModule) return mod;
 		    var result = {};
 		    if (mod != null) for (var k in mod) if (k !== "default" && Object.prototype.hasOwnProperty.call(mod, k)) __createBinding(result, mod, k);
 		    __setModuleDefault(result, mod);
 		    return result;
 		};
-		var __awaiter = (core.__awaiter) || function (thisArg, _arguments, P, generator) {
+		var __awaiter = (core && core.__awaiter) || function (thisArg, _arguments, P, generator) {
 		    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
 		    return new (P || (P = Promise))(function (resolve, reject) {
 		        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
@@ -32752,7 +32752,7 @@ function requireSafeBuffer () {
 	hasRequiredSafeBuffer = 1;
 	(function (module, exports) {
 		/* eslint-disable node/no-deprecated-api */
-		var buffer = require$$0$7;
+		var buffer = require$$0$5;
 		var Buffer = buffer.Buffer;
 
 		// alternative to using Object.keys for old browsers
@@ -33864,32 +33864,32 @@ var hasRequiredLib$1;
 function requireLib$1 () {
 	if (hasRequiredLib$1) return lib$1;
 	hasRequiredLib$1 = 1;
-	var __createBinding = (lib$1.__createBinding) || (Object.create ? (function(o, m, k, k2) {
+	var __createBinding = (lib$1 && lib$1.__createBinding) || (Object.create ? (function(o, m, k, k2) {
 	    if (k2 === undefined) k2 = k;
 	    Object.defineProperty(o, k2, { enumerable: true, get: function() { return m[k]; } });
 	}) : (function(o, m, k, k2) {
 	    if (k2 === undefined) k2 = k;
 	    o[k2] = m[k];
 	}));
-	var __setModuleDefault = (lib$1.__setModuleDefault) || (Object.create ? (function(o, v) {
+	var __setModuleDefault = (lib$1 && lib$1.__setModuleDefault) || (Object.create ? (function(o, v) {
 	    Object.defineProperty(o, "default", { enumerable: true, value: v });
 	}) : function(o, v) {
 	    o["default"] = v;
 	});
-	var __decorate = (lib$1.__decorate) || function (decorators, target, key, desc) {
+	var __decorate = (lib$1 && lib$1.__decorate) || function (decorators, target, key, desc) {
 	    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
 	    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
 	    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
 	    return c > 3 && r && Object.defineProperty(target, key, r), r;
 	};
-	var __importStar = (lib$1.__importStar) || function (mod) {
+	var __importStar = (lib$1 && lib$1.__importStar) || function (mod) {
 	    if (mod && mod.__esModule) return mod;
 	    var result = {};
 	    if (mod != null) for (var k in mod) if (k !== "default" && Object.hasOwnProperty.call(mod, k)) __createBinding(result, mod, k);
 	    __setModuleDefault(result, mod);
 	    return result;
 	};
-	var __importDefault = (lib$1.__importDefault) || function (mod) {
+	var __importDefault = (lib$1 && lib$1.__importDefault) || function (mod) {
 	    return (mod && mod.__esModule) ? mod : { "default": mod };
 	};
 	Object.defineProperty(lib$1, "__esModule", { value: true });
@@ -34341,7 +34341,7 @@ function requireLayout$1 () {
 	Object.defineProperty(Layout$1, "__esModule", { value: true });
 	Layout$1.s16 = Layout$1.s8 = Layout$1.nu64be = Layout$1.u48be = Layout$1.u40be = Layout$1.u32be = Layout$1.u24be = Layout$1.u16be = Layout$1.nu64 = Layout$1.u48 = Layout$1.u40 = Layout$1.u32 = Layout$1.u24 = Layout$1.u16 = Layout$1.u8 = Layout$1.offset = Layout$1.greedy = Layout$1.Constant = Layout$1.UTF8 = Layout$1.CString = Layout$1.Blob = Layout$1.Boolean = Layout$1.BitField = Layout$1.BitStructure = Layout$1.VariantLayout = Layout$1.Union = Layout$1.UnionLayoutDiscriminator = Layout$1.UnionDiscriminator = Layout$1.Structure = Layout$1.Sequence = Layout$1.DoubleBE = Layout$1.Double = Layout$1.FloatBE = Layout$1.Float = Layout$1.NearInt64BE = Layout$1.NearInt64 = Layout$1.NearUInt64BE = Layout$1.NearUInt64 = Layout$1.IntBE = Layout$1.Int = Layout$1.UIntBE = Layout$1.UInt = Layout$1.OffsetLayout = Layout$1.GreedyCount = Layout$1.ExternalLayout = Layout$1.bindConstructorLayout = Layout$1.nameWithProperty = Layout$1.Layout = Layout$1.uint8ArrayToBuffer = Layout$1.checkUint8Array = undefined;
 	Layout$1.constant = Layout$1.utf8 = Layout$1.cstr = Layout$1.blob = Layout$1.unionLayoutDiscriminator = Layout$1.union = Layout$1.seq = Layout$1.bits = Layout$1.struct = Layout$1.f64be = Layout$1.f64 = Layout$1.f32be = Layout$1.f32 = Layout$1.ns64be = Layout$1.s48be = Layout$1.s40be = Layout$1.s32be = Layout$1.s24be = Layout$1.s16be = Layout$1.ns64 = Layout$1.s48 = Layout$1.s40 = Layout$1.s32 = Layout$1.s24 = undefined;
-	const buffer_1 = require$$0$7;
+	const buffer_1 = require$$0$5;
 	/* Check if a value is a Uint8Array.
 	 *
 	 * @ignore */
@@ -119684,6 +119684,175 @@ fetch.isRedirect = function (code) {
 // expose Promise
 fetch.Promise = global.Promise;
 
+var stream;
+var hasRequiredStream;
+
+function requireStream () {
+	if (hasRequiredStream) return stream;
+	hasRequiredStream = 1;
+
+	const { Duplex } = Stream$1;
+
+	/**
+	 * Emits the `'close'` event on a stream.
+	 *
+	 * @param {Duplex} stream The stream.
+	 * @private
+	 */
+	function emitClose(stream) {
+	  stream.emit('close');
+	}
+
+	/**
+	 * The listener of the `'end'` event.
+	 *
+	 * @private
+	 */
+	function duplexOnEnd() {
+	  if (!this.destroyed && this._writableState.finished) {
+	    this.destroy();
+	  }
+	}
+
+	/**
+	 * The listener of the `'error'` event.
+	 *
+	 * @param {Error} err The error
+	 * @private
+	 */
+	function duplexOnError(err) {
+	  this.removeListener('error', duplexOnError);
+	  this.destroy();
+	  if (this.listenerCount('error') === 0) {
+	    // Do not suppress the throwing behavior.
+	    this.emit('error', err);
+	  }
+	}
+
+	/**
+	 * Wraps a `WebSocket` in a duplex stream.
+	 *
+	 * @param {WebSocket} ws The `WebSocket` to wrap
+	 * @param {Object} [options] The options for the `Duplex` constructor
+	 * @return {Duplex} The duplex stream
+	 * @public
+	 */
+	function createWebSocketStream(ws, options) {
+	  let terminateOnDestroy = true;
+
+	  const duplex = new Duplex({
+	    ...options,
+	    autoDestroy: false,
+	    emitClose: false,
+	    objectMode: false,
+	    writableObjectMode: false
+	  });
+
+	  ws.on('message', function message(msg, isBinary) {
+	    const data =
+	      !isBinary && duplex._readableState.objectMode ? msg.toString() : msg;
+
+	    if (!duplex.push(data)) ws.pause();
+	  });
+
+	  ws.once('error', function error(err) {
+	    if (duplex.destroyed) return;
+
+	    // Prevent `ws.terminate()` from being called by `duplex._destroy()`.
+	    //
+	    // - If the `'error'` event is emitted before the `'open'` event, then
+	    //   `ws.terminate()` is a noop as no socket is assigned.
+	    // - Otherwise, the error is re-emitted by the listener of the `'error'`
+	    //   event of the `Receiver` object. The listener already closes the
+	    //   connection by calling `ws.close()`. This allows a close frame to be
+	    //   sent to the other peer. If `ws.terminate()` is called right after this,
+	    //   then the close frame might not be sent.
+	    terminateOnDestroy = false;
+	    duplex.destroy(err);
+	  });
+
+	  ws.once('close', function close() {
+	    if (duplex.destroyed) return;
+
+	    duplex.push(null);
+	  });
+
+	  duplex._destroy = function (err, callback) {
+	    if (ws.readyState === ws.CLOSED) {
+	      callback(err);
+	      process.nextTick(emitClose, duplex);
+	      return;
+	    }
+
+	    let called = false;
+
+	    ws.once('error', function error(err) {
+	      called = true;
+	      callback(err);
+	    });
+
+	    ws.once('close', function close() {
+	      if (!called) callback(err);
+	      process.nextTick(emitClose, duplex);
+	    });
+
+	    if (terminateOnDestroy) ws.terminate();
+	  };
+
+	  duplex._final = function (callback) {
+	    if (ws.readyState === ws.CONNECTING) {
+	      ws.once('open', function open() {
+	        duplex._final(callback);
+	      });
+	      return;
+	    }
+
+	    // If the value of the `_socket` property is `null` it means that `ws` is a
+	    // client websocket and the handshake failed. In fact, when this happens, a
+	    // socket is never assigned to the websocket. Wait for the `'error'` event
+	    // that will be emitted by the websocket.
+	    if (ws._socket === null) return;
+
+	    if (ws._socket._writableState.finished) {
+	      callback();
+	      if (duplex._readableState.endEmitted) duplex.destroy();
+	    } else {
+	      ws._socket.once('finish', function finish() {
+	        // `duplex` is not destroyed here because the `'end'` event will be
+	        // emitted on `duplex` after this `'finish'` event. The EOF signaling
+	        // `null` chunk is, in fact, pushed when the websocket emits `'close'`.
+	        callback();
+	      });
+	      ws.close();
+	    }
+	  };
+
+	  duplex._read = function () {
+	    if (ws.isPaused) ws.resume();
+	  };
+
+	  duplex._write = function (chunk, encoding, callback) {
+	    if (ws.readyState === ws.CONNECTING) {
+	      ws.once('open', function open() {
+	        duplex._write(chunk, encoding, callback);
+	      });
+	      return;
+	    }
+
+	    ws.send(chunk, callback);
+	  };
+
+	  duplex.on('end', duplexOnEnd);
+	  duplex.on('error', duplexOnError);
+	  return duplex;
+	}
+
+	stream = createWebSocketStream;
+	return stream;
+}
+
+requireStream();
+
 var bufferUtil = {exports: {}};
 
 var constants$1;
@@ -120819,7 +120988,7 @@ function requireValidation () {
 	if (hasRequiredValidation) return validation.exports;
 	hasRequiredValidation = 1;
 
-	const { isUtf8 } = require$$0$7;
+	const { isUtf8 } = require$$0$5;
 
 	const { hasBlob } = requireConstants$1();
 
@@ -121696,6 +121865,8 @@ var hasRequiredSender;
 function requireSender () {
 	if (hasRequiredSender) return sender;
 	hasRequiredSender = 1;
+
+	const { Duplex } = Stream$1;
 	const { randomFillSync } = crypto$1;
 
 	const PerMessageDeflate = requirePermessageDeflate();
@@ -122818,12 +122989,13 @@ function requireWebsocket () {
 	if (hasRequiredWebsocket) return websocket;
 	hasRequiredWebsocket = 1;
 
-	const EventEmitter = require$$0$3;
+	const EventEmitter = require$$0$4;
 	const https = require$$1$1;
 	const http = require$$2$2;
-	const net = require$$0$6;
+	const net = require$$0$7;
 	const tls = require$$4;
 	const { randomBytes, createHash } = crypto$1;
+	const { Duplex, Readable } = Stream$1;
 	const { URL } = Url;
 
 	const PerMessageDeflate = requirePermessageDeflate();
@@ -124286,8 +124458,9 @@ function requireWebsocketServer () {
 	if (hasRequiredWebsocketServer) return websocketServer;
 	hasRequiredWebsocketServer = 1;
 
-	const EventEmitter = require$$0$3;
+	const EventEmitter = require$$0$4;
 	const http = require$$2$2;
+	const { Duplex } = Stream$1;
 	const { createHash } = crypto$1;
 
 	const extension = requireExtension();
@@ -130488,7 +130661,7 @@ function requireHumanizeMs () {
 	 * Module dependencies.
 	 */
 
-	var util = require$$0$4;
+	var util = require$$0$3;
 	var ms = /*@__PURE__*/ requireMs$1();
 
 	humanizeMs = function (t) {
@@ -130534,7 +130707,7 @@ function requireAgent () {
 
 	const OriginalAgent = require$$2$2.Agent;
 	const ms = /*@__PURE__*/ requireHumanizeMs();
-	const debug = require$$0$4.debuglog('agentkeepalive');
+	const debug = require$$0$3.debuglog('agentkeepalive');
 	const {
 	  INIT_SOCKET,
 	  CURRENT_ID,
@@ -138231,7 +138404,7 @@ function requireTypes$1 () {
 	hasRequiredTypes$1 = 1;
 	Object.defineProperty(types$1, "__esModule", { value: true });
 	types$1.isElementCollectionFixedSizeBeet = types$1.isFixableBeet = types$1.assertFixedSizeBeet = types$1.isFixedSizeBeet = types$1.BEET_TYPE_ARG_INNER = types$1.BEET_TYPE_ARG_LEN = types$1.BEET_PACKAGE = undefined;
-	const assert_1 = require$$0$5;
+	const assert_1 = require$$0$6;
 	/**
 	 * Matches name in package.json
 	 *
@@ -138295,7 +138468,7 @@ function requireNumbers () {
 	if (hasRequiredNumbers) return numbers;
 	hasRequiredNumbers = 1;
 	(function (exports) {
-		var __importDefault = (numbers.__importDefault) || function (mod) {
+		var __importDefault = (numbers && numbers.__importDefault) || function (mod) {
 		    return (mod && mod.__esModule) ? mod : { "default": mod };
 		};
 		Object.defineProperty(exports, "__esModule", { value: true });
@@ -139449,7 +139622,7 @@ function requireNode () {
 	hasRequiredNode = 1;
 	(function (module, exports) {
 		const tty = require$$1$5;
-		const util = require$$0$4;
+		const util = require$$0$3;
 
 		/**
 		 * This is the Node.js implementation of `debug()`.
@@ -139806,7 +139979,7 @@ var hasRequiredUtils$1;
 function requireUtils$1 () {
 	if (hasRequiredUtils$1) return utils$1;
 	hasRequiredUtils$1 = 1;
-	var __importDefault = (utils$1.__importDefault) || function (mod) {
+	var __importDefault = (utils$1 && utils$1.__importDefault) || function (mod) {
 	    return (mod && mod.__esModule) ? mod : { "default": mod };
 	};
 	Object.defineProperty(utils$1, "__esModule", { value: true });
@@ -139918,7 +140091,7 @@ function requireCollections () {
 	Object.defineProperty(collections, "__esModule", { value: true });
 	collections.collectionsTypeMap = collections.uint8Array = collections.fixedSizeUint8Array = collections.fixedSizeBuffer = collections.array = collections.fixedSizeArray = collections.uniformFixedSizeArray = undefined;
 	const types_1 = /*@__PURE__*/ requireTypes$1();
-	const assert_1 = require$$0$5;
+	const assert_1 = require$$0$6;
 	const numbers_1 = /*@__PURE__*/ requireNumbers();
 	const types_2 = /*@__PURE__*/ requireTypes$1();
 	const utils_1 = /*@__PURE__*/ requireUtils$1();
@@ -140188,7 +140361,7 @@ function requireComposites () {
 	hasRequiredComposites = 1;
 	Object.defineProperty(composites, "__esModule", { value: true });
 	composites.compositesTypeMap = composites.coption = composites.coptionSome = composites.coptionNone = composites.isNoneBuffer = composites.isSomeBuffer = undefined;
-	const assert_1 = require$$0$5;
+	const assert_1 = require$$0$6;
 	const types_1 = /*@__PURE__*/ requireTypes$1();
 	const types_2 = /*@__PURE__*/ requireTypes$1();
 	const utils_1 = /*@__PURE__*/ requireUtils$1();
@@ -140336,7 +140509,7 @@ function requireString () {
 		Object.defineProperty(exports, "__esModule", { value: true });
 		exports.stringTypeMap = exports.utf8String = exports.fixedSizeUtf8String = undefined;
 		const types_1 = /*@__PURE__*/ requireTypes$1();
-		const assert_1 = require$$0$5;
+		const assert_1 = require$$0$6;
 		const numbers_1 = /*@__PURE__*/ requireNumbers();
 		const utils_1 = /*@__PURE__*/ requireUtils$1();
 		/**
@@ -140425,7 +140598,7 @@ function requireReadWrite () {
 	hasRequiredReadWrite = 1;
 	Object.defineProperty(readWrite, "__esModule", { value: true });
 	readWrite.BeetReader = readWrite.BeetWriter = undefined;
-	const assert_1 = require$$0$5;
+	const assert_1 = require$$0$6;
 	/**
 	 * Underlying writer used to serialize structs.
 	 *
@@ -140622,7 +140795,7 @@ var hasRequiredStruct_fixable;
 function requireStruct_fixable () {
 	if (hasRequiredStruct_fixable) return struct_fixable;
 	hasRequiredStruct_fixable = 1;
-	var __importDefault = (struct_fixable.__importDefault) || function (mod) {
+	var __importDefault = (struct_fixable && struct_fixable.__importDefault) || function (mod) {
 	    return (mod && mod.__esModule) ? mod : { "default": mod };
 	};
 	Object.defineProperty(struct_fixable, "__esModule", { value: true });
@@ -140630,7 +140803,7 @@ function requireStruct_fixable () {
 	const beet_fixable_1 = /*@__PURE__*/ requireBeet_fixable();
 	const struct_1 = /*@__PURE__*/ requireStruct();
 	const types_1 = /*@__PURE__*/ requireTypes$1();
-	const assert_1 = require$$0$5;
+	const assert_1 = require$$0$6;
 	const utils_1 = /*@__PURE__*/ requireUtils$1();
 	const ansicolors_1 = __importDefault(requireAnsicolors());
 	const { brightBlack } = ansicolors_1.default;
@@ -140804,7 +140977,7 @@ function requireEnums () {
 	enums.enumsTypeMap = enums.dataEnum = enums.uniformDataEnum = enums.fixedScalarEnum = undefined;
 	const types_1 = /*@__PURE__*/ requireTypes$1();
 	const numbers_1 = /*@__PURE__*/ requireNumbers();
-	const assert_1 = require$$0$5;
+	const assert_1 = require$$0$6;
 	const struct_1 = /*@__PURE__*/ requireStruct();
 	const struct_fixable_1 = /*@__PURE__*/ requireStruct_fixable();
 	const unit_1 = /*@__PURE__*/ requireUnit();
@@ -141021,7 +141194,7 @@ function requireTuples () {
 	Object.defineProperty(tuples, "__esModule", { value: true });
 	tuples.tuplesTypeMap = tuples.tuple = tuples.fixedSizeTuple = undefined;
 	const types_1 = /*@__PURE__*/ requireTypes$1();
-	const assert_1 = require$$0$5;
+	const assert_1 = require$$0$6;
 	const beet_fixable_1 = /*@__PURE__*/ requireBeet_fixable();
 	// Tuples are a special kind of composite which can be understood as
 	// fixed length arrays where each tuple element can have a different data type.
@@ -141142,7 +141315,7 @@ function requireMaps () {
 	const types_1 = /*@__PURE__*/ requireTypes$1();
 	const numbers_1 = /*@__PURE__*/ requireNumbers();
 	const utils_1 = /*@__PURE__*/ requireUtils$1();
-	const assert_1 = require$$0$5;
+	const assert_1 = require$$0$6;
 	/**
 	 * De/Serializes a map with a specific number of key/values of type {@link K}
 	 * and {@link V} respectively.
@@ -141359,7 +141532,7 @@ function requireSets () {
 	const types_1 = /*@__PURE__*/ requireTypes$1();
 	const numbers_1 = /*@__PURE__*/ requireNumbers();
 	const utils_1 = /*@__PURE__*/ requireUtils$1();
-	const assert_1 = require$$0$5;
+	const assert_1 = require$$0$6;
 	/**
 	 * De/Serializes a set with a specific number of keys of type {@link K}.
 	 *
@@ -141520,7 +141693,7 @@ function requireBeet () {
 	if (hasRequiredBeet) return beet;
 	hasRequiredBeet = 1;
 	(function (exports) {
-		var __createBinding = (beet.__createBinding) || (Object.create ? (function(o, m, k, k2) {
+		var __createBinding = (beet && beet.__createBinding) || (Object.create ? (function(o, m, k, k2) {
 		    if (k2 === undefined) k2 = k;
 		    var desc = Object.getOwnPropertyDescriptor(m, k);
 		    if (!desc || ("get" in desc ? !m.__esModule : desc.writable || desc.configurable)) {
@@ -141531,7 +141704,7 @@ function requireBeet () {
 		    if (k2 === undefined) k2 = k;
 		    o[k2] = m[k];
 		}));
-		var __exportStar = (beet.__exportStar) || function(m, exports) {
+		var __exportStar = (beet && beet.__exportStar) || function(m, exports) {
 		    for (var p in m) if (p !== "default" && !Object.prototype.hasOwnProperty.call(exports, p)) __createBinding(exports, m, p);
 		};
 		Object.defineProperty(exports, "__esModule", { value: true });
@@ -141680,7 +141853,7 @@ var hasRequiredUtils;
 function requireUtils () {
 	if (hasRequiredUtils) return utils;
 	hasRequiredUtils = 1;
-	var __importDefault = (utils.__importDefault) || function (mod) {
+	var __importDefault = (utils && utils.__importDefault) || function (mod) {
 	    return (mod && mod.__esModule) ? mod : { "default": mod };
 	};
 	Object.defineProperty(utils, "__esModule", { value: true });
@@ -141842,7 +142015,7 @@ var hasRequiredUtil;
 function requireUtil () {
 	if (hasRequiredUtil) return util;
 	hasRequiredUtil = 1;
-	var __importDefault = (util.__importDefault) || function (mod) {
+	var __importDefault = (util && util.__importDefault) || function (mod) {
 	    return (mod && mod.__esModule) ? mod : { "default": mod };
 	};
 	Object.defineProperty(util, "__esModule", { value: true });
@@ -141866,7 +142039,7 @@ function requireGpa () {
 	Object.defineProperty(gpa, "__esModule", { value: true });
 	gpa.GpaBuilder = undefined;
 	const beet_1 = /*@__PURE__*/ requireBeet();
-	const assert_1 = require$$0$5;
+	const assert_1 = require$$0$6;
 	const utils_1 = /*@__PURE__*/ requireUtils();
 	const util_1 = /*@__PURE__*/ requireUtil();
 	/**
@@ -142032,7 +142205,7 @@ function requireBeetSolana () {
 	if (hasRequiredBeetSolana) return beetSolana;
 	hasRequiredBeetSolana = 1;
 	(function (exports) {
-		var __createBinding = (beetSolana.__createBinding) || (Object.create ? (function(o, m, k, k2) {
+		var __createBinding = (beetSolana && beetSolana.__createBinding) || (Object.create ? (function(o, m, k, k2) {
 		    if (k2 === undefined) k2 = k;
 		    var desc = Object.getOwnPropertyDescriptor(m, k);
 		    if (!desc || ("get" in desc ? !m.__esModule : desc.writable || desc.configurable)) {
@@ -142043,7 +142216,7 @@ function requireBeetSolana () {
 		    if (k2 === undefined) k2 = k;
 		    o[k2] = m[k];
 		}));
-		var __exportStar = (beetSolana.__exportStar) || function(m, exports) {
+		var __exportStar = (beetSolana && beetSolana.__exportStar) || function(m, exports) {
 		    for (var p in m) if (p !== "default" && !Object.prototype.hasOwnProperty.call(exports, p)) __createBinding(exports, m, p);
 		};
 		Object.defineProperty(exports, "__esModule", { value: true });
@@ -142673,19 +142846,19 @@ var hasRequiredResolveError;
 function requireResolveError () {
 	if (hasRequiredResolveError) return resolveError;
 	hasRequiredResolveError = 1;
-	var __createBinding = (resolveError.__createBinding) || (Object.create ? (function(o, m, k, k2) {
+	var __createBinding = (resolveError && resolveError.__createBinding) || (Object.create ? (function(o, m, k, k2) {
 	    if (k2 === undefined) k2 = k;
 	    Object.defineProperty(o, k2, { enumerable: true, get: function() { return m[k]; } });
 	}) : (function(o, m, k, k2) {
 	    if (k2 === undefined) k2 = k;
 	    o[k2] = m[k];
 	}));
-	var __setModuleDefault = (resolveError.__setModuleDefault) || (Object.create ? (function(o, v) {
+	var __setModuleDefault = (resolveError && resolveError.__setModuleDefault) || (Object.create ? (function(o, v) {
 	    Object.defineProperty(o, "default", { enumerable: true, value: v });
 	}) : function(o, v) {
 	    o["default"] = v;
 	});
-	var __importStar = (resolveError.__importStar) || function (mod) {
+	var __importStar = (resolveError && resolveError.__importStar) || function (mod) {
 	    if (mod && mod.__esModule) return mod;
 	    var result = {};
 	    if (mod != null) for (var k in mod) if (k !== "default" && Object.prototype.hasOwnProperty.call(mod, k)) __createBinding(result, mod, k);
@@ -142889,14 +143062,14 @@ function requireCusper () {
 	if (hasRequiredCusper) return cusper$1;
 	hasRequiredCusper = 1;
 	(function (exports) {
-		var __createBinding = (cusper$1.__createBinding) || (Object.create ? (function(o, m, k, k2) {
+		var __createBinding = (cusper$1 && cusper$1.__createBinding) || (Object.create ? (function(o, m, k, k2) {
 		    if (k2 === undefined) k2 = k;
 		    Object.defineProperty(o, k2, { enumerable: true, get: function() { return m[k]; } });
 		}) : (function(o, m, k, k2) {
 		    if (k2 === undefined) k2 = k;
 		    o[k2] = m[k];
 		}));
-		var __exportStar = (cusper$1.__exportStar) || function(m, exports) {
+		var __exportStar = (cusper$1 && cusper$1.__exportStar) || function(m, exports) {
 		    for (var p in m) if (p !== "default" && !Object.prototype.hasOwnProperty.call(exports, p)) __createBinding(exports, m, p);
 		};
 		Object.defineProperty(exports, "__esModule", { value: true });
@@ -147506,7 +147679,7 @@ var CompiledKeys = class _CompiledKeys {
   }
   getMessageComponents() {
     const mapEntries = [...this.keyMetaMap.entries()];
-    require$$0$5(mapEntries.length <= 256, "Max static account keys length exceeded");
+    require$$0$6(mapEntries.length <= 256, "Max static account keys length exceeded");
     const writableSigners = mapEntries.filter(
       ([, meta]) => meta.isSigner && meta.isWritable
     );
@@ -147525,12 +147698,12 @@ var CompiledKeys = class _CompiledKeys {
       numReadonlyUnsignedAccounts: readonlyNonSigners.length
     };
     {
-      require$$0$5(
+      require$$0$6(
         writableSigners.length > 0,
         "Expected at least one writable signer key"
       );
       const [payerAddress] = writableSigners[0];
-      require$$0$5(
+      require$$0$6(
         payerAddress === this.payer.toBase58(),
         "Expected first writable signer key to be the fee payer"
       );
@@ -147578,7 +147751,7 @@ var CompiledKeys = class _CompiledKeys {
           (entry) => entry.equals(key)
         );
         if (lookupTableIndex >= 0) {
-          require$$0$5(lookupTableIndex < 256, "Max lookup table index exceeded");
+          require$$0$6(lookupTableIndex < 256, "Max lookup table index exceeded");
           lookupTableIndexes.push(lookupTableIndex);
           drainedKeys.push(key);
           this.keyMetaMap.delete(address);
@@ -153141,7 +153314,7 @@ function requireDist () {
 	if (hasRequiredDist) return dist;
 	hasRequiredDist = 1;
 	(function (exports) {
-		var __importDefault = (dist.__importDefault) || function (mod) {
+		var __importDefault = (dist && dist.__importDefault) || function (mod) {
 		    return (mod && mod.__esModule) ? mod : { "default": mod };
 		};
 		Object.defineProperty(exports, "__esModule", { value: true });
@@ -153371,7 +153544,7 @@ var hasRequiredIdl;
 function requireIdl () {
 	if (hasRequiredIdl) return idl;
 	hasRequiredIdl = 1;
-	var __createBinding = (idl.__createBinding) || (Object.create ? (function(o, m, k, k2) {
+	var __createBinding = (idl && idl.__createBinding) || (Object.create ? (function(o, m, k, k2) {
 	    if (k2 === undefined) k2 = k;
 	    var desc = Object.getOwnPropertyDescriptor(m, k);
 	    if (!desc || ("get" in desc ? !m.__esModule : desc.writable || desc.configurable)) {
@@ -153382,25 +153555,25 @@ function requireIdl () {
 	    if (k2 === undefined) k2 = k;
 	    o[k2] = m[k];
 	}));
-	var __setModuleDefault = (idl.__setModuleDefault) || (Object.create ? (function(o, v) {
+	var __setModuleDefault = (idl && idl.__setModuleDefault) || (Object.create ? (function(o, v) {
 	    Object.defineProperty(o, "default", { enumerable: true, value: v });
 	}) : function(o, v) {
 	    o["default"] = v;
 	});
-	var __importStar = (idl.__importStar) || function (mod) {
+	var __importStar = (idl && idl.__importStar) || function (mod) {
 	    if (mod && mod.__esModule) return mod;
 	    var result = {};
 	    if (mod != null) for (var k in mod) if (k !== "default" && Object.prototype.hasOwnProperty.call(mod, k)) __createBinding(result, mod, k);
 	    __setModuleDefault(result, mod);
 	    return result;
 	};
-	var __importDefault = (idl.__importDefault) || function (mod) {
+	var __importDefault = (idl && idl.__importDefault) || function (mod) {
 	    return (mod && mod.__esModule) ? mod : { "default": mod };
 	};
 	Object.defineProperty(idl, "__esModule", { value: true });
 	idl.handleDefinedFields = idl.convertIdlToCamelCase = idl.encodeIdlAccount = idl.decodeIdlAccount = idl.seed = idl.idlAddress = idl.isCompositeAccounts = undefined;
 	const camelcase_1 = __importDefault(requireCamelcase());
-	const buffer_1 = require$$0$7;
+	const buffer_1 = require$$0$5;
 	const web3_js_1 = require$$2;
 	const borsh = __importStar(requireDist());
 	function isCompositeAccounts(accountItem) {
