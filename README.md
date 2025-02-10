@@ -4,6 +4,10 @@ A GitHub Action to automate Solana program upgrades through Squads multisig.
 This action creates and submits a multisig transaction that includes program
 upgrade, optional IDL update, and optional PDA verification.
 
+The easiest way to use this squads action is to use the
+[reusable workflow](https://github.com/solana-developers/github-workflows) which
+will automatically handle the build, upload, and verify steps.
+
 ## Features
 
 - Creates a Squads multisig transaction containing:
@@ -17,7 +21,7 @@ upgrade, optional IDL update, and optional PDA verification.
 ## Usage
 
 ```yaml
-- uses: Woody4618/squads-program-action@main
+- uses: Woody4618/squads-program-action@v0.3.0
   with:
     # Required: RPC URL for Solana
     rpc: ${{ secrets.RPC_URL }}

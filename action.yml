@@ -11,26 +11,38 @@ branding:
 # Define your inputs here.
 inputs:
   rpc:
-    description: The RPC URL
+    description: 'RPC URL for Solana'
     required: true
   program:
-    description: The Program ID
+    description: 'Program ID to upgrade'
     required: true
   buffer:
-    description: The Program buffer address
+    description: 'Buffer containing the new program'
     required: true
   idl-buffer:
-    description: The IDL buffer address
+    description: 'Buffer containing the new IDL'
     required: true
   multisig:
-    description: The Multisig address
+    description: 'Squads multisig address'
     required: true
   keypair:
-    description: Path to keypair file
+    description:
+      'Byte array of the keypair. Needs to have at least voter permission in
+      squads. Format: [23,42,53...]'
     required: true
   pda-tx:
-    description: The base64 encoded verify pda transaction
+    description:
+      'Base64 encoded PDA verification transaction. Get this from solana verify
+      cli using solana-verify export-pda-tx'
     required: false
+  priority-fee:
+    description: 'Priority fee in lamports for the transaction'
+    required: false
+    default: '100000'
+  vault-index:
+    description: 'Index of the Squads vault to use'
+    required: false
+    default: '0'
 
 outputs:
   time:
